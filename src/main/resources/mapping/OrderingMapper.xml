@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.core.dao.OrderingMapper" >
+  <resultMap id="BaseResultMap" type="com.edu.core.domain.Ordering" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="studentid" property="studentid" jdbcType="VARCHAR" />
+    <result column="courseid" property="courseid" jdbcType="VARCHAR" />
+    <result column="teacherid" property="teacherid" jdbcType="VARCHAR" />
+    <result column="ordercode" property="ordercode" jdbcType="VARCHAR" />
+    <result column="summoney" property="summoney" jdbcType="DECIMAL" />
+    <result column="paymode" property="paymode" jdbcType="VARCHAR" />
+    <result column="chage" property="chage" jdbcType="DECIMAL" />
+    <result column="ordertime" property="ordertime" jdbcType="TIMESTAMP" />
+    <result column="stype" property="stype" jdbcType="VARCHAR" />
+    <result column="pstate" property="pstate" jdbcType="VARCHAR" />
+    <result column="paystate" property="paystate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, studentid, courseid, teacherid, ordercode, summoney, paymode, chage, ordertime, 
+    stype, pstate, paystate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ordering
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ordering
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.edu.core.domain.Ordering" >
+    insert into ordering (id, studentid, courseid, 
+      teacherid, ordercode, summoney, 
+      paymode, chage, ordertime, 
+      stype, pstate, paystate
+      )
+    values (#{id,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, #{courseid,jdbcType=VARCHAR}, 
+      #{teacherid,jdbcType=VARCHAR}, #{ordercode,jdbcType=VARCHAR}, #{summoney,jdbcType=DECIMAL}, 
+      #{paymode,jdbcType=VARCHAR}, #{chage,jdbcType=DECIMAL}, #{ordertime,jdbcType=TIMESTAMP}, 
+      #{stype,jdbcType=VARCHAR}, #{pstate,jdbcType=VARCHAR}, #{paystate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.edu.core.domain.Ordering" >
+    insert into ordering
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="studentid != null" >
+        studentid,
+      </if>
+      <if test="courseid != null" >
+        courseid,
+      </if>
+      <if test="teacherid != null" >
+        teacherid,
+      </if>
+      <if test="ordercode != null" >
+        ordercode,
+      </if>
+      <if test="summoney != null" >
+        summoney,
+      </if>
+      <if test="paymode != null" >
+        paymode,
+      </if>
+      <if test="chage != null" >
+        chage,
+      </if>
+      <if test="ordertime != null" >
+        ordertime,
+      </if>
+      <if test="stype != null" >
+        stype,
+      </if>
+      <if test="pstate != null" >
+        pstate,
+      </if>
+      <if test="paystate != null" >
+        paystate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="studentid != null" >
+        #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        #{courseid,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="ordercode != null" >
+        #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="summoney != null" >
+        #{summoney,jdbcType=DECIMAL},
+      </if>
+      <if test="paymode != null" >
+        #{paymode,jdbcType=VARCHAR},
+      </if>
+      <if test="chage != null" >
+        #{chage,jdbcType=DECIMAL},
+      </if>
+      <if test="ordertime != null" >
+        #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stype != null" >
+        #{stype,jdbcType=VARCHAR},
+      </if>
+      <if test="pstate != null" >
+        #{pstate,jdbcType=VARCHAR},
+      </if>
+      <if test="paystate != null" >
+        #{paystate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edu.core.domain.Ordering" >
+    update ordering
+    <set >
+      <if test="studentid != null" >
+        studentid = #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        courseid = #{courseid,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null" >
+        teacherid = #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="ordercode != null" >
+        ordercode = #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="summoney != null" >
+        summoney = #{summoney,jdbcType=DECIMAL},
+      </if>
+      <if test="paymode != null" >
+        paymode = #{paymode,jdbcType=VARCHAR},
+      </if>
+      <if test="chage != null" >
+        chage = #{chage,jdbcType=DECIMAL},
+      </if>
+      <if test="ordertime != null" >
+        ordertime = #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stype != null" >
+        stype = #{stype,jdbcType=VARCHAR},
+      </if>
+      <if test="pstate != null" >
+        pstate = #{pstate,jdbcType=VARCHAR},
+      </if>
+      <if test="paystate != null" >
+        paystate = #{paystate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.edu.core.domain.Ordering" >
+    update ordering
+    set studentid = #{studentid,jdbcType=VARCHAR},
+      courseid = #{courseid,jdbcType=VARCHAR},
+      teacherid = #{teacherid,jdbcType=VARCHAR},
+      ordercode = #{ordercode,jdbcType=VARCHAR},
+      summoney = #{summoney,jdbcType=DECIMAL},
+      paymode = #{paymode,jdbcType=VARCHAR},
+      chage = #{chage,jdbcType=DECIMAL},
+      ordertime = #{ordertime,jdbcType=TIMESTAMP},
+      stype = #{stype,jdbcType=VARCHAR},
+      pstate = #{pstate,jdbcType=VARCHAR},
+      paystate = #{paystate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ordering
+    where ordercode = #{code,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOther" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ordering
+    where studentid = #{studentid,jdbcType=VARCHAR} and courseid = #{courseid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySql" resultType="com.edu.core.domain.Ordering">
+    select 
+    <include refid="Base_Column_List" />
+    from ordering
+	where  ${sqlwhere}
+  </select>
+  <select id="getCount" resultType="java.lang.Integer" >
+ 	select count(*) from ordering where  ${sqlwhere}
+  </select>
+  <select id="getMoneyByDay" resultType="java.lang.Long">
+ 	select sum(summoney) from ordering 
+	WHERE DATE_FORMAT(ordertime,'%Y%m%d') = #{days,jdbcType=VARCHAR} and paystate=#{paystate,jdbcType=VARCHAR}
+	group by DATE_FORMAT(ordertime,'%Y%m%d');  
+  </select>
+  <select id="getChageByDay" resultType="java.lang.Long" >
+ 	select sum(chage) from ordering 
+	WHERE DATE_FORMAT(ordertime,'%Y%m%d') = #{days,jdbcType=VARCHAR}
+	group by DATE_FORMAT(ordertime,'%Y%m%d');  
+  </select>
+  <select id="getMoneyByWeak" resultType="java.lang.Long">
+ 	select sum(summoney) from ordering 
+	WHERE DATE_FORMAT(ordertime,'%Y%u') = #{weaks,jdbcType=VARCHAR} and paystate=#{paystate,jdbcType=VARCHAR}
+	group by DATE_FORMAT(ordertime,'%Y%u');  
+  </select>
+  <select id="getChageByWeak" resultType="java.lang.Long" >
+ 	select sum(chage) from ordering 
+	WHERE DATE_FORMAT(ordertime,'%Y%u') = #{weaks,jdbcType=VARCHAR} 
+	group by DATE_FORMAT(ordertime,'%Y%u');  
+  </select>
+  <select id="getMoneyByMonth" resultType="java.lang.Long">
+ 	select sum(summoney) from ordering 
+	WHERE DATE_FORMAT(ordertime,'%Y%m') = #{month,jdbcType=VARCHAR} and paystate=#{paystate,jdbcType=VARCHAR}
+	group by DATE_FORMAT(ordertime,'%Y%m');  
+  </select>
+  <select id="getChageByMonth" resultType="java.lang.Long" >
+ 	select sum(chage) from ordering 
+	WHERE DATE_FORMAT(ordertime,'%Y%m') = #{month,jdbcType=VARCHAR}
+	group by DATE_FORMAT(ordertime,'%Y%m');  
+  </select>
+  <select id="getMoneyByYear" resultType="java.lang.Long">
+ 	select sum(summoney) from ordering 
+	WHERE DATE_FORMAT(ordertime,'%Y') = #{years,jdbcType=VARCHAR} and paystate=#{paystate,jdbcType=VARCHAR}
+	group by DATE_FORMAT(ordertime,'%Y'); 
+  </select>
+  <select id="getChageByYear" resultType="java.lang.Long" >
+ 	select sum(chage) from ordering 
+	WHERE DATE_FORMAT(ordertime,'%Y') = #{years,jdbcType=VARCHAR}
+	group by DATE_FORMAT(ordertime,'%Y');  
+  </select>
+</mapper>

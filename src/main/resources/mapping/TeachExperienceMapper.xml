@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.core.dao.TeachExperienceMapper" >
+  <resultMap id="BaseResultMap" type="com.edu.core.domain.TeachExperience" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="teacherid" property="teacherid" jdbcType="VARCHAR" />
+    <result column="stage" property="stage" jdbcType="VARCHAR" />
+    <result column="school" property="school" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, teacherid, stage, school, grade
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teachexperience
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from teachexperience
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByTeacherid" parameterType="java.lang.String" >
+    delete from teachexperience
+    where teacherid = #{teacherid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.edu.core.domain.TeachExperience" >
+    insert into teachexperience (id, teacherid, stage, 
+      school, grade)
+    values (#{id,jdbcType=VARCHAR}, #{teacherid,jdbcType=VARCHAR}, #{stage,jdbcType=VARCHAR}, 
+      #{school,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.edu.core.domain.TeachExperience" >
+    insert into teachexperience
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="teacherid != null" >
+        teacherid,
+      </if>
+      <if test="stage != null" >
+        stage,
+      </if>
+      <if test="school != null" >
+        school,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null" >
+        #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edu.core.domain.TeachExperience" >
+    update teachexperience
+    <set >
+      <if test="teacherid != null" >
+        teacherid = #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="stage != null" >
+        stage = #{stage,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null" >
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.edu.core.domain.TeachExperience" >
+    update teachexperience
+    set teacherid = #{teacherid,jdbcType=VARCHAR},
+      stage = #{stage,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByTeacherid" resultType="com.edu.core.domain.TeachExperience" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teachexperience
+    where teacherid = #{teacherid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySql" resultType="com.edu.core.domain.TeachExperience">
+    select 
+    <include refid="Base_Column_List" />
+    from teachexperience
+	where  ${sqlwhere}
+  </select>
+  <select id="getCount" resultType="java.lang.Integer" >
+ 	  select count(*) from  teachexperience
+ 	  where  ${sqlwhere}
+  </select>
+</mapper>

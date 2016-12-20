@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.dao.AppraiseMapper" >
+  <resultMap id="BaseResultMap" type="com.edu.domain.Appraise" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="teacherid" property="teacherid" jdbcType="VARCHAR" />
+    <result column="studentid" property="studentid" jdbcType="VARCHAR" />
+    <result column="courseid" property="courseid" jdbcType="VARCHAR" />
+    <result column="subcourseid" property="subcourseid" jdbcType="VARCHAR" />
+    <result column="orderid" property="orderid" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="totalscore" property="totalscore" jdbcType="INTEGER" />
+    <result column="factscore" property="factscore" jdbcType="INTEGER" />
+    <result column="avgscore" property="avgscore" jdbcType="INTEGER" />
+    <result column="attitudescore" property="attitudescore" jdbcType="INTEGER" />
+    <result column="qualityscore" property="qualityscore" jdbcType="INTEGER" />
+    <result column="advise" property="advise" jdbcType="VARCHAR" />
+    <result column="firetime" property="firetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, teacherid, studentid, courseid, subcourseid, orderid, grade, totalscore, factscore, 
+    avgscore, attitudescore, qualityscore, advise, firetime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from appraise
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from appraise
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.edu.domain.Appraise" >
+    insert into appraise (id, teacherid, studentid, 
+      courseid, subcourseid, orderid, 
+      grade, totalscore, factscore, 
+      avgscore, attitudescore, qualityscore, 
+      advise, firetime)
+    values (#{id,jdbcType=VARCHAR}, #{teacherid,jdbcType=VARCHAR}, #{studentid,jdbcType=VARCHAR}, 
+      #{courseid,jdbcType=VARCHAR}, #{subcourseid,jdbcType=VARCHAR}, #{orderid,jdbcType=VARCHAR}, 
+      #{grade,jdbcType=VARCHAR}, #{totalscore,jdbcType=INTEGER}, #{factscore,jdbcType=INTEGER}, 
+      #{avgscore,jdbcType=INTEGER}, #{attitudescore,jdbcType=INTEGER}, #{qualityscore,jdbcType=INTEGER}, 
+      #{advise,jdbcType=VARCHAR}, #{firetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.edu.domain.Appraise" >
+    insert into appraise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="teacherid != null" >
+        teacherid,
+      </if>
+      <if test="studentid != null" >
+        studentid,
+      </if>
+      <if test="courseid != null" >
+        courseid,
+      </if>
+      <if test="subcourseid != null" >
+        subcourseid,
+      </if>
+      <if test="orderid != null" >
+        orderid,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="totalscore != null" >
+        totalscore,
+      </if>
+      <if test="factscore != null" >
+        factscore,
+      </if>
+      <if test="avgscore != null" >
+        avgscore,
+      </if>
+      <if test="attitudescore != null" >
+        attitudescore,
+      </if>
+      <if test="qualityscore != null" >
+        qualityscore,
+      </if>
+      <if test="advise != null" >
+        advise,
+      </if>
+      <if test="firetime != null" >
+        firetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="studentid != null" >
+        #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        #{courseid,jdbcType=VARCHAR},
+      </if>
+      <if test="subcourseid != null" >
+        #{subcourseid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="totalscore != null" >
+        #{totalscore,jdbcType=INTEGER},
+      </if>
+      <if test="factscore != null" >
+        #{factscore,jdbcType=INTEGER},
+      </if>
+      <if test="avgscore != null" >
+        #{avgscore,jdbcType=INTEGER},
+      </if>
+      <if test="attitudescore != null" >
+        #{attitudescore,jdbcType=INTEGER},
+      </if>
+      <if test="qualityscore != null" >
+        #{qualityscore,jdbcType=INTEGER},
+      </if>
+      <if test="advise != null" >
+        #{advise,jdbcType=VARCHAR},
+      </if>
+      <if test="firetime != null" >
+        #{firetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edu.domain.Appraise" >
+    update appraise
+    <set >
+      <if test="teacherid != null" >
+        teacherid = #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="studentid != null" >
+        studentid = #{studentid,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        courseid = #{courseid,jdbcType=VARCHAR},
+      </if>
+      <if test="subcourseid != null" >
+        subcourseid = #{subcourseid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null" >
+        orderid = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="totalscore != null" >
+        totalscore = #{totalscore,jdbcType=INTEGER},
+      </if>
+      <if test="factscore != null" >
+        factscore = #{factscore,jdbcType=INTEGER},
+      </if>
+      <if test="avgscore != null" >
+        avgscore = #{avgscore,jdbcType=INTEGER},
+      </if>
+      <if test="attitudescore != null" >
+        attitudescore = #{attitudescore,jdbcType=INTEGER},
+      </if>
+      <if test="qualityscore != null" >
+        qualityscore = #{qualityscore,jdbcType=INTEGER},
+      </if>
+      <if test="advise != null" >
+        advise = #{advise,jdbcType=VARCHAR},
+      </if>
+      <if test="firetime != null" >
+        firetime = #{firetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.edu.domain.Appraise" >
+    update appraise
+    set teacherid = #{teacherid,jdbcType=VARCHAR},
+      studentid = #{studentid,jdbcType=VARCHAR},
+      courseid = #{courseid,jdbcType=VARCHAR},
+      subcourseid = #{subcourseid,jdbcType=VARCHAR},
+      orderid = #{orderid,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      totalscore = #{totalscore,jdbcType=INTEGER},
+      factscore = #{factscore,jdbcType=INTEGER},
+      avgscore = #{avgscore,jdbcType=INTEGER},
+      attitudescore = #{attitudescore,jdbcType=INTEGER},
+      qualityscore = #{qualityscore,jdbcType=INTEGER},
+      advise = #{advise,jdbcType=VARCHAR},
+      firetime = #{firetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectBylimit" resultType="com.edu.domain.Appraise">
+    select 
+    <include refid="Base_Column_List" />
+    from appraise
+    where  ${sqlwhere} LIMIT #{offset},#{limit} 
+  </select>
+  <select id="selectBySql" resultType="com.edu.domain.Appraise">
+    select 
+    <include refid="Base_Column_List" />
+    from appraise
+	where  ${sqlwhere}
+  </select>
+  <select id="getCount" resultType="java.lang.Integer" >
+ 	  select count(*) from appraise
+ 	  where  ${sqlwhere}
+  </select>
+</mapper>

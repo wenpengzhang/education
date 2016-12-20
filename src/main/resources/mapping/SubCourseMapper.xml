@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.core.dao.SubCourseMapper" >
+  <resultMap id="BaseResultMap" type="com.edu.core.domain.SubCourse" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="courseid" property="courseid" jdbcType="VARCHAR" />
+    <result column="teacherid" property="teacherid" jdbcType="VARCHAR" />
+    <result column="datestart" property="datestart" jdbcType="TIMESTAMP" />
+    <result column="dateend" property="dateend" jdbcType="TIMESTAMP" />
+    <result column="stratdate" property="stratdate" jdbcType="VARCHAR" />
+    <result column="enddate" property="enddate" jdbcType="VARCHAR" />
+    <result column="subname" property="subname" jdbcType="VARCHAR" />
+    <result column="lecturer" property="lecturer" jdbcType="VARCHAR" />
+    <result column="subtype" property="subtype" jdbcType="VARCHAR" />
+    <result column="subprice" property="subprice" jdbcType="DECIMAL" />
+    <result column="substate" property="substate" jdbcType="VARCHAR" />
+    <result column="liveurl" property="liveurl" jdbcType="VARCHAR" />
+    <result column="chatname" property="chatname" jdbcType="VARCHAR" />
+    <result column="recordurl" property="recordurl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, courseid, teacherid, datestart, dateend, stratdate, enddate, subname, lecturer, 
+    subtype, subprice, substate, liveurl, chatname, recordurl
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from subcourse
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from subcourse
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.edu.core.domain.SubCourse" >
+    insert into subcourse (id, courseid, teacherid, 
+      datestart, dateend, stratdate, 
+      enddate, subname, lecturer, 
+      subtype, subprice, substate, 
+      liveurl, chatname)
+    values (#{id,jdbcType=VARCHAR}, #{courseid,jdbcType=VARCHAR}, #{teacherid,jdbcType=VARCHAR}, 
+      #{datestart,jdbcType=TIMESTAMP}, #{dateend,jdbcType=TIMESTAMP}, #{stratdate,jdbcType=VARCHAR}, 
+      #{enddate,jdbcType=VARCHAR}, #{subname,jdbcType=VARCHAR}, #{lecturer,jdbcType=VARCHAR}, 
+      #{subtype,jdbcType=VARCHAR}, #{subprice,jdbcType=DECIMAL}, #{substate,jdbcType=VARCHAR}, 
+      #{liveurl,jdbcType=VARCHAR}, #{chatname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.edu.core.domain.SubCourse" >
+    insert into subcourse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="courseid != null" >
+        courseid,
+      </if>
+      <if test="teacherid != null" >
+        teacherid,
+      </if>
+      <if test="datestart != null" >
+        datestart,
+      </if>
+      <if test="dateend != null" >
+        dateend,
+      </if>
+      <if test="stratdate != null" >
+        stratdate,
+      </if>
+      <if test="enddate != null" >
+        enddate,
+      </if>
+      <if test="subname != null" >
+        subname,
+      </if>
+      <if test="lecturer != null" >
+        lecturer,
+      </if>
+      <if test="subtype != null" >
+        subtype,
+      </if>
+      <if test="subprice != null" >
+        subprice,
+      </if>
+      <if test="substate != null" >
+        substate,
+      </if>
+      <if test="liveurl != null" >
+        liveurl,
+      </if>
+      <if test="chatname != null" >
+        chatname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="courseid != null" >
+        #{courseid,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="datestart != null" >
+        #{datestart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateend != null" >
+        #{dateend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stratdate != null" >
+        #{stratdate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="subname != null" >
+        #{subname,jdbcType=VARCHAR},
+      </if>
+      <if test="lecturer != null" >
+        #{lecturer,jdbcType=VARCHAR},
+      </if>
+      <if test="subtype != null" >
+        #{subtype,jdbcType=VARCHAR},
+      </if>
+      <if test="subprice != null" >
+        #{subprice,jdbcType=DECIMAL},
+      </if>
+      <if test="substate != null" >
+        #{substate,jdbcType=VARCHAR},
+      </if>
+      <if test="liveurl != null" >
+        #{liveurl,jdbcType=VARCHAR},
+      </if>
+      <if test="chatname != null" >
+        #{chatname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edu.core.domain.SubCourse" >
+    update subcourse
+    <set >
+      <if test="courseid != null" >
+        courseid = #{courseid,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null" >
+        teacherid = #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="datestart != null" >
+        datestart = #{datestart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dateend != null" >
+        dateend = #{dateend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stratdate != null" >
+        stratdate = #{stratdate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        enddate = #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="subname != null" >
+        subname = #{subname,jdbcType=VARCHAR},
+      </if>
+      <if test="lecturer != null" >
+        lecturer = #{lecturer,jdbcType=VARCHAR},
+      </if>
+      <if test="subtype != null" >
+        subtype = #{subtype,jdbcType=VARCHAR},
+      </if>
+      <if test="subprice != null" >
+        subprice = #{subprice,jdbcType=DECIMAL},
+      </if>
+      <if test="substate != null" >
+        substate = #{substate,jdbcType=VARCHAR},
+      </if>
+      <if test="liveurl != null" >
+        liveurl = #{liveurl,jdbcType=VARCHAR},
+      </if>
+      <if test="chatname != null" >
+        chatname = #{chatname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.edu.core.domain.SubCourse" >
+    update subcourse
+    set courseid = #{courseid,jdbcType=VARCHAR},
+      teacherid = #{teacherid,jdbcType=VARCHAR},
+      datestart = #{datestart,jdbcType=TIMESTAMP},
+      dateend = #{dateend,jdbcType=TIMESTAMP},
+      stratdate = #{stratdate,jdbcType=VARCHAR},
+      enddate = #{enddate,jdbcType=VARCHAR},
+      subname = #{subname,jdbcType=VARCHAR},
+      lecturer = #{lecturer,jdbcType=VARCHAR},
+      subtype = #{subtype,jdbcType=VARCHAR},
+      subprice = #{subprice,jdbcType=DECIMAL},
+      substate = #{substate,jdbcType=VARCHAR},
+      liveurl = #{liveurl,jdbcType=VARCHAR},
+      chatname = #{chatname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+   <delete id="deleteByCourseKey" parameterType="java.lang.String" >
+    delete from subcourse
+    where courseid = #{courseid,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectByTeacherid" resultType="com.edu.core.domain.SubCourse" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from subcourse
+    where courseid = #{courseid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySql" resultType="com.edu.core.domain.SubCourse">
+    select 
+    <include refid="Base_Column_List" />
+    from subcourse
+	where  ${sqlwhere}
+  </select>
+  <select id="getCount" resultType="java.lang.Integer" >
+ 	  select count(*) from  subcourse
+ 	  where  ${sqlwhere}
+  </select>
+</mapper>

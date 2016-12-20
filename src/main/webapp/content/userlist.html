@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>用户管理</title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            user.bindList();
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <div class="place">
+            <span>位置：</span>
+            <ul class="placeul">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">系统管理</a></li>
+                <li><a href="#">用户管理</a></li>
+            </ul>
+        </div>
+        <div class="rightinfo">
+            <div class="tools">
+                <ul class="toolbar">
+                    <li id="lbtnlock" class="click"><span>
+                        <!--<img src="../images/t01.png" alt="锁定账号" />--></span>锁定账号</li>
+                    <li id="lbtnunlock"><span>
+                        <!--<img src="../images/t03.png" alt="解锁账号" />--></span>解锁账号</li>
+                    <li id="lbtnreset" class="click"><span>
+                        <!--<img src="../images/t02.png" alt="密码重置" />--></span>密码重置</li>
+                    <li id="lbtnpara"><span>
+                        <!--<img src="../images/t04.png" alt="分配角色" />--></span>分配角色</li>
+                </ul>
+                <ul class="toolbar1">
+                    <li>
+                        <label>
+                            综合查询</label><input id="txtword" type="text" class="scinput" /></li>
+                    <li id="btnquery" class="click"><span>
+                        <img src="../images/t05.png" alt="查询" /></span>查询</li>
+                </ul>
+            </div>
+            <table class="tablelist">
+                <thead>
+                    <tr>
+                        <th style="width: 75px">
+                            <input id='checkall' type="checkbox" />
+                        </th>
+                        <th>
+                            账号
+                        </th>
+                        <th>
+                            姓名
+                        </th>
+                        <th>
+                            手机号码
+                        </th>
+                        <th>
+                            电子邮箱
+                        </th>
+                        <th>
+                            QQ账号
+                        </th>
+                        <th>
+                            角色类型
+                        </th>
+                        <th>
+                            账号状态
+                        </th>
+                         <th>
+                            注册时间
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="datas">
+                    <tr id="template">
+                        <td id="id">
+                        </td>
+                        <td id="username">
+                        </td>
+                        <td id="name">
+                        </td>
+                        <td id="phono">
+                        </td>
+                        <td id="email">
+                        </td>
+                        <td id="major">
+                        </td>
+                        <td id="rolename">
+                        </td>
+                        <td id="lockstate">
+                        </td>
+                         <td id="currentdate">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagin">
+                <div class="message">
+                    共<i id="lblrcdcount" class="blue">0</i>条记录，共&nbsp;<i id="lblpagecount" class="blue">1&nbsp;</i>页</div>
+                <ul class="paginList">
+                    <li id="btnfirst" class="paginItem"><a><span>首页</span></a></li>
+                    <li id="btnprevious" class="paginItem"><a><span>上一页</span></a></li>
+                    <li class="paginItem"><a>
+                        <input id="txtpage" type="text" class="scinput" style="width: 45px; height: 25px" /></a></li>
+                    <li id="btnnext" class="paginItem"><a><span>下一页</span></a></li>
+                    <li id="btnlast" class="paginItem"><a><span>尾页</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

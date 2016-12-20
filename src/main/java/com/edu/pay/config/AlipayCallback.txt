@@ -1,0 +1,57 @@
+WAIT_BUYER_PAY:
+
+buyer_id: 2088002944089945
+body: 商品描述~
+trade_no: 2015050800001000940051778530
+use_coupon: N
+notify_time: 2015-05-08 18:22:52
+subject: 商品名称~
+sign_type: RSA
+is_total_fee_adjust: Y
+notify_type: trade_status_sync
+out_trade_no: 0508182246-1919
+gmt_payment: null
+trade_status: WAIT_BUYER_PAY
+discount: 0.00
+sign: KM3IJobWTOICzjo5g0Z6obCnxUPuq39GJo8W0OY199JPb0RON0BgHYBbOGBdm96ptKbPZPjmxDUf8TvBa7yb4zawbWYnc31L/RyTE3XuarbaPBKvluRU9S8PDB//n3GxdDXti1QdwfXg9OkRPh4XJ6fevj12nOvNDnlVY+Ro8rg=
+gmt_refund: null
+gmt_create: 2015-05-08 18:22:52
+buyer_email: missxxx@vip.qq.com
+price: 0.01
+total_fee: 0.01
+refund_status: null
+quantity: 1
+seller_id: 2088612902510109
+notify_id: 5566b9373be7e466ae5d8f8a6af93aae78
+seller_email: zhulu_dev@163.com
+payment_type: 1
+
+
+
+TRADE_SUCCESS:
+
+buyer_id: 2088002944089945
+body: 商品描述~
+trade_no: 2015050800001000940051778530
+use_coupon: N
+notify_time: 2015-05-08 18:22:53
+subject: 商品名称~
+sign_type: RSA
+is_total_fee_adjust: N
+notify_type: trade_status_sync
+out_trade_no: 0508182246-1919
+gmt_payment: 2015-05-08 18:22:53
+trade_status: TRADE_SUCCESS
+discount: 0.00
+sign: Gfchn3Wk49jUKWsTqp+4RGvDucWgUTM3QgT2BfkGRBV9dSmXZTdi0MOxjGG7lWtqxQ06wiO1SF3EUuIxY4OtpND1SbKZzfHSQui3LkpoweNouflx716GFEt4oTdWV9nmyF1+QeRXbZFJJtb+P9zVtGez/hxm14pZmhgi7AW9xyY=
+gmt_refund: null
+gmt_create: 2015-05-08 18:22:52
+buyer_email: missxxx@vip.qq.com
+price: 0.01
+total_fee: 0.01
+refund_status: null
+quantity: 1
+seller_id: 2088612902510109
+notify_id: 8056231d73c05c79b1edee286cf1461778
+seller_email: zhulu_dev@163.com
+payment_type: 1

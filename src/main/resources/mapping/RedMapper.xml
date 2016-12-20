@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.core.dao.RedMapper" >
+  <resultMap id="BaseResultMap" type="com.edu.core.domain.Red" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="rstatus" property="rstatus" jdbcType="INTEGER" />
+    <result column="redname" property="redname" jdbcType="VARCHAR" />
+    <result column="contion" property="contion" jdbcType="VARCHAR" />
+    <result column="edate" property="edate" jdbcType="VARCHAR" />
+    <result column="redtype" property="redtype" jdbcType="VARCHAR" />
+    <result column="sdate" property="sdate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userid, price, rstatus, redname, contion, edate, redtype, sdate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from red
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from red
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.edu.core.domain.Red" >
+    insert into red (id, userid, price, 
+      rstatus, redname, contion, 
+      edate, redtype, sdate
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR}, #{price,jdbcType=REAL}, 
+      #{rstatus,jdbcType=INTEGER}, #{redname,jdbcType=VARCHAR}, #{contion,jdbcType=VARCHAR}, 
+      #{edate,jdbcType=VARCHAR}, #{redtype,jdbcType=VARCHAR}, #{sdate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.edu.core.domain.Red" >
+    insert into red
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="rstatus != null" >
+        rstatus,
+      </if>
+      <if test="redname != null" >
+        redname,
+      </if>
+      <if test="contion != null" >
+        contion,
+      </if>
+      <if test="edate != null" >
+        edate,
+      </if>
+      <if test="redtype != null" >
+        redtype,
+      </if>
+      <if test="sdate != null" >
+        sdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="rstatus != null" >
+        #{rstatus,jdbcType=INTEGER},
+      </if>
+      <if test="redname != null" >
+        #{redname,jdbcType=VARCHAR},
+      </if>
+      <if test="contion != null" >
+        #{contion,jdbcType=VARCHAR},
+      </if>
+      <if test="edate != null" >
+        #{edate,jdbcType=VARCHAR},
+      </if>
+      <if test="redtype != null" >
+        #{redtype,jdbcType=VARCHAR},
+      </if>
+      <if test="sdate != null" >
+        #{sdate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edu.core.domain.Red" >
+    update red
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="rstatus != null" >
+        rstatus = #{rstatus,jdbcType=INTEGER},
+      </if>
+      <if test="redname != null" >
+        redname = #{redname,jdbcType=VARCHAR},
+      </if>
+      <if test="contion != null" >
+        contion = #{contion,jdbcType=VARCHAR},
+      </if>
+      <if test="edate != null" >
+        edate = #{edate,jdbcType=VARCHAR},
+      </if>
+      <if test="redtype != null" >
+        redtype = #{redtype,jdbcType=VARCHAR},
+      </if>
+      <if test="sdate != null" >
+        sdate = #{sdate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.edu.core.domain.Red" >
+    update red
+    set userid = #{userid,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      rstatus = #{rstatus,jdbcType=INTEGER},
+      redname = #{redname,jdbcType=VARCHAR},
+      contion = #{contion,jdbcType=VARCHAR},
+      edate = #{edate,jdbcType=VARCHAR},
+      redtype = #{redtype,jdbcType=VARCHAR},
+      sdate = #{sdate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getListByStudentID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+     select 
+    <include refid="Base_Column_List" />
+    from red
+  where  ${sqlwhere}
+  </select>
+</mapper>

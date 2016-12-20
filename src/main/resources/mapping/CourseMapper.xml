@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.core.dao.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.edu.core.domain.Course" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="teacherid" property="teacherid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="vstage" property="vstage" jdbcType="VARCHAR" />
+    <result column="vsubject" property="vsubject" jdbcType="VARCHAR" />
+    <result column="vgrade" property="vgrade" jdbcType="VARCHAR" />
+    <result column="cmode" property="cmode" jdbcType="VARCHAR" />
+    <result column="firsttype" property="firsttype" jdbcType="VARCHAR" />
+    <result column="sectype" property="sectype" jdbcType="VARCHAR" />
+    <result column="thirdttype" property="thirdttype" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="ccount" property="ccount" jdbcType="INTEGER" />
+    <result column="cnumber" property="cnumber" jdbcType="INTEGER" />
+    <result column="cversion" property="cversion" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="timezones" property="timezones" jdbcType="VARCHAR" />
+    <result column="discription" property="discription" jdbcType="VARCHAR" />
+    <result column="pichead" property="pichead" jdbcType="VARCHAR" />
+    <result column="pstate" property="pstate" jdbcType="VARCHAR" />
+    <result column="sellstate" property="sellstate" jdbcType="VARCHAR" />
+    <result column="subnumber" property="subnumber" jdbcType="INTEGER" />
+    <result column="subcount" property="subcount" jdbcType="INTEGER" />
+    <result column="published" property="published" jdbcType="VARCHAR" />
+    <result column="showtop" property="showtop" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, teacherid, name, vstage, vsubject, vgrade, cmode, firsttype, sectype, thirdttype, 
+    price, ccount, cnumber, cversion, area, timezones, discription, pichead, pstate, 
+    sellstate, subnumber, subcount, published, showtop
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from course
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.edu.core.domain.Course" >
+    insert into course (id, teacherid, name, 
+      vstage, vsubject, vgrade, 
+      cmode, firsttype, sectype, 
+      thirdttype, price, ccount, 
+      cnumber, cversion, area, 
+      timezones, discription, pichead, 
+      pstate, sellstate, subnumber, 
+      subcount, published, showtop
+      )
+    values (#{id,jdbcType=VARCHAR}, #{teacherid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{vstage,jdbcType=VARCHAR}, #{vsubject,jdbcType=VARCHAR}, #{vgrade,jdbcType=VARCHAR}, 
+      #{cmode,jdbcType=VARCHAR}, #{firsttype,jdbcType=VARCHAR}, #{sectype,jdbcType=VARCHAR}, 
+      #{thirdttype,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{ccount,jdbcType=INTEGER}, 
+      #{cnumber,jdbcType=INTEGER}, #{cversion,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{timezones,jdbcType=VARCHAR}, #{discription,jdbcType=VARCHAR}, #{pichead,jdbcType=VARCHAR}, 
+      #{pstate,jdbcType=VARCHAR}, #{sellstate,jdbcType=VARCHAR}, #{subnumber,jdbcType=INTEGER}, 
+      #{subcount,jdbcType=INTEGER}, #{published,jdbcType=VARCHAR}, #{showtop,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.edu.core.domain.Course" >
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="teacherid != null" >
+        teacherid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="vstage != null" >
+        vstage,
+      </if>
+      <if test="vsubject != null" >
+        vsubject,
+      </if>
+      <if test="vgrade != null" >
+        vgrade,
+      </if>
+      <if test="cmode != null" >
+        cmode,
+      </if>
+      <if test="firsttype != null" >
+        firsttype,
+      </if>
+      <if test="sectype != null" >
+        sectype,
+      </if>
+      <if test="thirdttype != null" >
+        thirdttype,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="ccount != null" >
+        ccount,
+      </if>
+      <if test="cnumber != null" >
+        cnumber,
+      </if>
+      <if test="cversion != null" >
+        cversion,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="timezones != null" >
+        timezones,
+      </if>
+      <if test="discription != null" >
+        discription,
+      </if>
+      <if test="pichead != null" >
+        pichead,
+      </if>
+      <if test="pstate != null" >
+        pstate,
+      </if>
+      <if test="sellstate != null" >
+        sellstate,
+      </if>
+      <if test="subnumber != null" >
+        subnumber,
+      </if>
+      <if test="subcount != null" >
+        subcount,
+      </if>
+      <if test="published != null" >
+        published,
+      </if>
+      <if test="showtop != null" >
+        showtop,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="vstage != null" >
+        #{vstage,jdbcType=VARCHAR},
+      </if>
+      <if test="vsubject != null" >
+        #{vsubject,jdbcType=VARCHAR},
+      </if>
+      <if test="vgrade != null" >
+        #{vgrade,jdbcType=VARCHAR},
+      </if>
+      <if test="cmode != null" >
+        #{cmode,jdbcType=VARCHAR},
+      </if>
+      <if test="firsttype != null" >
+        #{firsttype,jdbcType=VARCHAR},
+      </if>
+      <if test="sectype != null" >
+        #{sectype,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdttype != null" >
+        #{thirdttype,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="ccount != null" >
+        #{ccount,jdbcType=INTEGER},
+      </if>
+      <if test="cnumber != null" >
+        #{cnumber,jdbcType=INTEGER},
+      </if>
+      <if test="cversion != null" >
+        #{cversion,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="timezones != null" >
+        #{timezones,jdbcType=VARCHAR},
+      </if>
+      <if test="discription != null" >
+        #{discription,jdbcType=VARCHAR},
+      </if>
+      <if test="pichead != null" >
+        #{pichead,jdbcType=VARCHAR},
+      </if>
+      <if test="pstate != null" >
+        #{pstate,jdbcType=VARCHAR},
+      </if>
+      <if test="sellstate != null" >
+        #{sellstate,jdbcType=VARCHAR},
+      </if>
+      <if test="subnumber != null" >
+        #{subnumber,jdbcType=INTEGER},
+      </if>
+      <if test="subcount != null" >
+        #{subcount,jdbcType=INTEGER},
+      </if>
+      <if test="published != null" >
+        #{published,jdbcType=VARCHAR},
+      </if>
+      <if test="showtop != null" >
+        #{showtop,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edu.core.domain.Course" >
+    update course
+    <set >
+      <if test="teacherid != null" >
+        teacherid = #{teacherid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="vstage != null" >
+        vstage = #{vstage,jdbcType=VARCHAR},
+      </if>
+      <if test="vsubject != null" >
+        vsubject = #{vsubject,jdbcType=VARCHAR},
+      </if>
+      <if test="vgrade != null" >
+        vgrade = #{vgrade,jdbcType=VARCHAR},
+      </if>
+      <if test="cmode != null" >
+        cmode = #{cmode,jdbcType=VARCHAR},
+      </if>
+      <if test="firsttype != null" >
+        firsttype = #{firsttype,jdbcType=VARCHAR},
+      </if>
+      <if test="sectype != null" >
+        sectype = #{sectype,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdttype != null" >
+        thirdttype = #{thirdttype,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="ccount != null" >
+        ccount = #{ccount,jdbcType=INTEGER},
+      </if>
+      <if test="cnumber != null" >
+        cnumber = #{cnumber,jdbcType=INTEGER},
+      </if>
+      <if test="cversion != null" >
+        cversion = #{cversion,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="timezones != null" >
+        timezones = #{timezones,jdbcType=VARCHAR},
+      </if>
+      <if test="discription != null" >
+        discription = #{discription,jdbcType=VARCHAR},
+      </if>
+      <if test="pichead != null" >
+        pichead = #{pichead,jdbcType=VARCHAR},
+      </if>
+      <if test="pstate != null" >
+        pstate = #{pstate,jdbcType=VARCHAR},
+      </if>
+      <if test="sellstate != null" >
+        sellstate = #{sellstate,jdbcType=VARCHAR},
+      </if>
+      <if test="subnumber != null" >
+        subnumber = #{subnumber,jdbcType=INTEGER},
+      </if>
+      <if test="subcount != null" >
+        subcount = #{subcount,jdbcType=INTEGER},
+      </if>
+      <if test="published != null" >
+        published = #{published,jdbcType=VARCHAR},
+      </if>
+      <if test="showtop != null" >
+        showtop = #{showtop,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.edu.core.domain.Course" >
+    update course
+    set teacherid = #{teacherid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      vstage = #{vstage,jdbcType=VARCHAR},
+      vsubject = #{vsubject,jdbcType=VARCHAR},
+      vgrade = #{vgrade,jdbcType=VARCHAR},
+      cmode = #{cmode,jdbcType=VARCHAR},
+      firsttype = #{firsttype,jdbcType=VARCHAR},
+      sectype = #{sectype,jdbcType=VARCHAR},
+      thirdttype = #{thirdttype,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      ccount = #{ccount,jdbcType=INTEGER},
+      cnumber = #{cnumber,jdbcType=INTEGER},
+      cversion = #{cversion,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      timezones = #{timezones,jdbcType=VARCHAR},
+      discription = #{discription,jdbcType=VARCHAR},
+      pichead = #{pichead,jdbcType=VARCHAR},
+      pstate = #{pstate,jdbcType=VARCHAR},
+      sellstate = #{sellstate,jdbcType=VARCHAR},
+      subnumber = #{subnumber,jdbcType=INTEGER},
+      subcount = #{subcount,jdbcType=INTEGER},
+      published = #{published,jdbcType=VARCHAR},
+      showtop = #{showtop,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectBylimit" resultType="com.edu.core.domain.Course">
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where  ${sqlwhere} LIMIT #{offset},#{limit} 
+  </select>
+  <select id="selectBySql" resultType="com.edu.core.domain.Course">
+    select 
+    <include refid="Base_Column_List" />
+    from course
+	where  ${sqlwhere}
+  </select>
+  <select id="selectBySqlAndTeacherid" resultType="com.edu.core.domain.Course">
+    select 
+    <include refid="Base_Column_List" />
+    from course
+	where  ${sqlwhere} and id in (select courseid from subcourse where teacherid= #{teacherid,jdbcType=VARCHAR})
+  </select>
+   <select id="selectBySqlAndStudentid" resultType="com.edu.core.domain.Course">
+    select 
+    <include refid="Base_Column_List" />
+    from course
+	where  ${sqlwhere} and id in (select courseid from ordering where studentid= #{studentid,jdbcType=VARCHAR})
+  </select>
+  <select id="getCount" resultType="java.lang.Integer" >
+ 	  select count(*) from  course
+ 	  where  ${sqlwhere}
+  </select>
+</mapper>

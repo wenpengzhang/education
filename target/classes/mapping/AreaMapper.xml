@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.core.dao.AreaMapper" >
+  <resultMap id="BaseResultMap" type="com.edu.core.domain.Area" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="parentid" property="parentid" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="codetree" property="codetree" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="alias" property="alias" jdbcType="VARCHAR" />
+    <result column="pinyin" property="pinyin" jdbcType="VARCHAR" />
+    <result column="stype" property="stype" jdbcType="VARCHAR" />
+    <result column="pstate" property="pstate" jdbcType="VARCHAR" />
+    <result column="recstate" property="recstate" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, parentid, code, codetree, name, alias, pinyin, stype, pstate, recstate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from area
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from area
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.edu.core.domain.Area" >
+    insert into area (id, parentid, code, 
+      codetree, name, alias, 
+      pinyin, stype, pstate, 
+      recstate)
+    values (#{id,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{codetree,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
+      #{pinyin,jdbcType=VARCHAR}, #{stype,jdbcType=VARCHAR}, #{pstate,jdbcType=VARCHAR}, 
+      #{recstate,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.edu.core.domain.Area" >
+    insert into area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="parentid != null" >
+        parentid,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="codetree != null" >
+        codetree,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="alias != null" >
+        alias,
+      </if>
+      <if test="pinyin != null" >
+        pinyin,
+      </if>
+      <if test="stype != null" >
+        stype,
+      </if>
+      <if test="pstate != null" >
+        pstate,
+      </if>
+      <if test="recstate != null" >
+        recstate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="codetree != null" >
+        #{codetree,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null" >
+        #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="stype != null" >
+        #{stype,jdbcType=VARCHAR},
+      </if>
+      <if test="pstate != null" >
+        #{pstate,jdbcType=VARCHAR},
+      </if>
+      <if test="recstate != null" >
+        #{recstate,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.edu.core.domain.Area" >
+    update area
+    <set >
+      <if test="parentid != null" >
+        parentid = #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="codetree != null" >
+        codetree = #{codetree,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="alias != null" >
+        alias = #{alias,jdbcType=VARCHAR},
+      </if>
+      <if test="pinyin != null" >
+        pinyin = #{pinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="stype != null" >
+        stype = #{stype,jdbcType=VARCHAR},
+      </if>
+      <if test="pstate != null" >
+        pstate = #{pstate,jdbcType=VARCHAR},
+      </if>
+      <if test="recstate != null" >
+        recstate = #{recstate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.edu.core.domain.Area" >
+    update area
+    set parentid = #{parentid,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      codetree = #{codetree,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      alias = #{alias,jdbcType=VARCHAR},
+      pinyin = #{pinyin,jdbcType=VARCHAR},
+      stype = #{stype,jdbcType=VARCHAR},
+      pstate = #{pstate,jdbcType=VARCHAR},
+      recstate = #{recstate,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from area
+    where code = #{scode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParentid" resultType="com.edu.core.domain.Area" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from area
+    where parentid = #{parentid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySql" resultType="com.edu.core.domain.Area">
+    select 
+    <include refid="Base_Column_List" />
+    from area
+	where  ${sqlwhere}
+  </select>
+  <select id="getCount" resultType="java.lang.Integer" >
+ 	  select count(*) from area
+ 	  where  ${sqlwhere}
+  </select>
+</mapper>

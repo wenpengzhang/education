@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.dao.ViewSuborderMapper" >
+  <resultMap id="BaseResultMap" type="com.edu.domain.ViewSuborder" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="studentid" property="studentid" jdbcType="VARCHAR" />
+    <result column="courseid" property="courseid" jdbcType="VARCHAR" />
+    <result column="teacherid" property="teacherid" jdbcType="VARCHAR" />
+    <result column="subcourseid" property="subcourseid" jdbcType="VARCHAR" />
+    <result column="ordercode" property="ordercode" jdbcType="VARCHAR" />
+    <result column="studentname" property="studentname" jdbcType="VARCHAR" />
+    <result column="studentmobile" property="studentmobile" jdbcType="VARCHAR" />
+    <result column="teachername" property="teachername" jdbcType="VARCHAR" />
+    <result column="teachermobile" property="teachermobile" jdbcType="VARCHAR" />
+    <result column="datestart" property="datestart" jdbcType="TIMESTAMP" />
+    <result column="dateend" property="dateend" jdbcType="TIMESTAMP" />
+    <result column="stratdate" property="stratdate" jdbcType="VARCHAR" />
+    <result column="enddate" property="enddate" jdbcType="VARCHAR" />
+    <result column="subname" property="subname" jdbcType="VARCHAR" />
+    <result column="lecturer" property="lecturer" jdbcType="VARCHAR" />
+    <result column="subtype" property="subtype" jdbcType="VARCHAR" />
+    <result column="subprice" property="subprice" jdbcType="DECIMAL" />
+    <result column="substate" property="substate" jdbcType="VARCHAR" />
+    <result column="liveurl" property="liveurl" jdbcType="VARCHAR" />
+    <result column="chatname" property="chatname" jdbcType="VARCHAR" />
+    <result column="coursename" property="coursename" jdbcType="VARCHAR" />
+    <result column="vstage" property="vstage" jdbcType="VARCHAR" />
+    <result column="vsubject" property="vsubject" jdbcType="VARCHAR" />
+    <result column="vgrade" property="vgrade" jdbcType="VARCHAR" />
+    <result column="cmode" property="cmode" jdbcType="VARCHAR" />
+    <result column="firsttype" property="firsttype" jdbcType="VARCHAR" />
+    <result column="sectype" property="sectype" jdbcType="VARCHAR" />
+    <result column="thirdttype" property="thirdttype" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="ccount" property="ccount" jdbcType="INTEGER" />
+    <result column="cnumber" property="cnumber" jdbcType="INTEGER" />
+    <result column="summoney" property="summoney" jdbcType="DECIMAL" />
+    <result column="paymode" property="paymode" jdbcType="VARCHAR" />
+    <result column="ordertime" property="ordertime" jdbcType="TIMESTAMP" />
+    <result column="progress" property="progress" jdbcType="INTEGER" />
+    <result column="sumprogress" property="sumprogress" jdbcType="INTEGER" />
+    <result column="stype" property="stype" jdbcType="VARCHAR" />
+    <result column="pstate" property="pstate" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="StatResultMap" type="com.edu.domain.StatOrder" >
+    <result column="fid" property="fid" jdbcType="VARCHAR" />
+    <result column="ordercount" property="ordercount" jdbcType="INTEGER" />
+    <result column="summoney" property="summoney" jdbcType="DECIMAL" />
+    <result column="progress" property="progress" jdbcType="INTEGER" />
+    <result column="sumprogress" property="sumprogress" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+   id, studentid, courseid, teacherid, subcourseid, ordercode, studentname, studentmobile, teachername, teachermobile, datestart, dateend, 
+   stratdate, enddate, subname, lecturer, subtype, subprice, substate, liveurl, chatname, coursename, vstage, vsubject, vgrade, cmode, firsttype, 
+   sectype, thirdttype, price, ccount, cnumber, summoney,  paymode, ordertime, progress, sumprogress, stype, pstate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from viewsuborder
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySql" resultType="com.edu.domain.ViewSuborder">
+    select 
+    <include refid="Base_Column_List" />
+    from viewsuborder
+	where  ${sqlwhere}
+  </select>
+  <select id="getCount" resultType="java.lang.Integer" >
+ 	  select count(*) from  viewsuborder
+ 	  where  ${sqlwhere}
+  </select>
+  <select id="statByTeacherid" resultMap="StatResultMap" parameterType="java.lang.String" >
+   SELECT teacherid as fid,COUNT(DISTINCT ordercode) as ordercount ,SUM(subprice) as summoney,
+	count(if(substate='未进行',true,null)) AS progress,COUNT(teacherid) as sumprogress
+	FROM viewsuborder
+    where teacherid = #{teacherid,jdbcType=VARCHAR}
+    GROUP BY teacherid
+  </select>
+</mapper>
