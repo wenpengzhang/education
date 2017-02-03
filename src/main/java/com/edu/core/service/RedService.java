@@ -27,4 +27,12 @@ public class RedService {
 		return this.redMapper.insert(record);
 	}
 
+	public Red selectRedById(Integer id) {
+		return this.redMapper.selectByPrimaryKey(id);
+	}
+
+	public int updateRedById(Red red) {
+		return this.redMapper.updateByPrimaryKeySelective(red);
+	}
+
 }

@@ -55,6 +55,7 @@ public class ResponseHandler {
 		this.uriEncoding = "";
 
 		Map m = this.request.getParameterMap();
+		System.out.println("================m="+m.toString());
 		Iterator it = m.keySet().iterator();
 		while (it.hasNext()) {
 			String k = (String) it.next();
@@ -134,7 +135,6 @@ public class ResponseHandler {
 		}
 
 		sb.append("key=" + this.getKey());
-
 		// ���ժҪ
 		String enc = TenpayUtil.getCharacterEncoding(this.request, this.response);
 		String sign = MD5Util.MD5Encode(sb.toString(), enc).toLowerCase();
@@ -143,6 +143,8 @@ public class ResponseHandler {
 
 		// debug��Ϣ
 		this.setDebugInfo(sb.toString() + " => sign:" + sign + " tenpaySign:" + tenpaySign);
+		System.out.println("sign="+sign);
+		System.out.println("tenpaySign="+tenpaySign);
 
 		return tenpaySign.equals(sign);
 	}

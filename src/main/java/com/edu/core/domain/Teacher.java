@@ -2,6 +2,7 @@ package com.edu.core.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Teacher {
     private String id;
@@ -64,6 +65,8 @@ public class Teacher {
 
     private String showtop;
 
+    private Map<String,Object> videodict;
+    
     private String published;
 
     private Integer recstate;
@@ -343,4 +346,14 @@ public class Teacher {
     public void setExperience(List<TeachExperience> list) {
         this.list = list == null ? null : list;
     }
+
+	public Map<String,Object> getVideodict() {
+		return videodict;
+	}
+
+	public void setVideodict(Map<String,Object> videodict) {
+		this.videodict = videodict;
+	}
+
+	
 }

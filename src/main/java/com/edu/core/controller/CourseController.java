@@ -306,6 +306,7 @@ public class CourseController extends BaseController {
 	@RequestMapping("/show")
 	public Map<String,Object> show(HttpServletRequest request,Model model){
 		String id=request.getParameter("id");
+		System.out.println("id="+id);
 		Course course = this.courseService.selectByPrimaryKey(id);
 		List<SubCourse> list = subCourseService.selectBySql("courseid='"+id+"'");
 		course.setSubCourse(list);
@@ -461,7 +462,7 @@ public class CourseController extends BaseController {
 			course.setCmode(request.getParameter("cmode"));
 			course.setFirsttype(request.getParameter("firsttype"));
 			course.setPrice(Long.parseLong(request.getParameter("price")));
-			course.setCnumber(0);
+			//course.setCnumber(0);
 			course.setCcount(Integer.parseInt(request.getParameter("ccount")));
 			course = upload(request,course);
 			course.setCcount(Integer.parseInt(request.getParameter("ccount")));

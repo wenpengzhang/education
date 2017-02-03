@@ -232,24 +232,28 @@ public class StudentController extends BaseController {
 			map.put("code", "1111");
 			map.put("success", true);
 			map.put("message", "修改成功！");
-			// 修改成功以后根据信息完整度看是否发送红包
+			// 修改成功以后根据信息完整度看是否发送红包,而且只送一次
 			// 判断条件realname：grade：address：school：mobileother
-			if (!"".equals(request.getParameter("grade")) && !"".equals(request.getParameter("realname"))
-					&& !"".equals(request.getParameter("address")) && !"".equals(request.getParameter("school"))
-					&& !"".equals(request.getParameter("mobileother"))) {
-				// 创建红包数据模型,并且插入数据
-				Red red = new Red();
-				red.setUserid(id);
-				red.setPrice((float) 5);
-				red.setRedname("完善信息");
-				red.setContion("所有课程有效");
-				red.setRedtype("通用红包");
-				red.setEdate("永久有效");
-				red.setRstatus(0);
-				red.setSdate(CommonUtil.dateFormat(new Date(), null));
-				redService.insert(red);
+			String sqlwhere = "userid = '" + id + "'";
+			sqlwhere += " and redname = '完善信息'";
+			List<Red> list = this.redService.getListByStudentID(sqlwhere);
+			if (list.size() == 0) {
+				if (!"".equals(request.getParameter("grade")) && !"".equals(request.getParameter("realname"))
+						&& !"".equals(request.getParameter("address")) && !"".equals(request.getParameter("school"))
+						&& !"".equals(request.getParameter("mobileother"))) {
+					// 创建红包数据模型,并且插入数据
+					Red red = new Red();
+					red.setUserid(id);
+					red.setPrice((float) 5);
+					red.setRedname("完善信息");
+					red.setContion("所有课程有效");
+					red.setRedtype("通用红包");
+					red.setEdate("永久有效");
+					red.setRstatus(0);
+					red.setSdate(CommonUtil.dateFormat(new Date(), null));
+					redService.insert(red);
+				}
 			}
-
 		} else {
 			map.put("code", "0000");
 			map.put("success", false);
@@ -283,9 +287,11 @@ public class StudentController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/forgetThePassword")
 	public Map<String, Object> forgetThePassword(HttpServletRequest request, Model model) throws ParseException {
-		String teacherid = request.getParameter("teacherid");
+		String accounts = request.getParameter("accounts");
 		String newpassword = request.getParameter("newpassword");
-		Student student = this.studentService.selectByPrimaryKey(teacherid);
+		System.out.println("accounts="+accounts);
+		System.out.println("newpassword="+newpassword);
+		Student student = this.studentService.selectByCode(accounts);
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (student != null) {
 			student.setPassword(newpassword);

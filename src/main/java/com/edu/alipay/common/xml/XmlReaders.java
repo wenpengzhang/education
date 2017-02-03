@@ -79,7 +79,7 @@ public class XmlReaders {
      */
     public String getNodeStr(String tagName){
         Node node = getNode(tagName);
-        return node == null ? null : node.getTextContent();
+        return node == null ? null :  getNodeStr(tagName);
     }
 
     /**
