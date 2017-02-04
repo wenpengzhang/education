@@ -102,6 +102,7 @@ public class UserController extends BaseController {
 			map.put("code", "1111");
 			map.put("success", true);
 			map.put("message", "登录成功！");
+			
 
 //			mv.addObject(map);
 //			mv.setViewName("/index");

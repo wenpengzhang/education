@@ -22,7 +22,7 @@ public class SessionFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// 不过滤的uri
-        String[] notFilter = new String[] {"/images", "/js", "/content", "/jquery", "/upload", "/css","/login.jsp","/user/login"};
+        String[] notFilter = new String[] {"/images", "/js", "/content", "/jquery", "/upload", "/css","/login.jsp","/user/login","/index.jsp"};
         // 请求的uri
         String uri = request.getRequestURI();
         // 是否过滤
