@@ -354,8 +354,8 @@ public class SubCourseController extends BaseController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		SubCourse subCourse = new SubCourse();
 		subCourse.setId(subcourseid);
-		subCourse.setDatestart(CommonUtil.stringToDate(datestart, "yyyy-MM-dd HH:mm:ss"));
-		subCourse.setDateend(CommonUtil.stringToDate(dateend, "yyyy-MM-dd HH:mm:ss"));
+		subCourse.setStratdate(datestart);
+		subCourse.setEnddate(dateend);
 		subCourse.setSubname(subname);
 		subCourse.setSubtype(subtype);
 		subCourse.setTeacherid(teacherid);
