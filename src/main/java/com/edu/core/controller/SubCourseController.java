@@ -341,4 +341,34 @@ public class SubCourseController extends BaseController {
 		return map;
 
 	}
+	
+	@ResponseBody
+	@RequestMapping("/edit")
+	public Map<String, Object> edit(HttpServletRequest request, Model model) throws ParseException {
+		String subcourseid = request.getParameter("subcourseid");
+		String datestart = request.getParameter("datestart");
+		String dateend = request.getParameter("dateend");
+		String subname = request.getParameter("subname");
+		String subtype = request.getParameter("subtype");
+		String teacherid = request.getParameter("teacherid");
+		Map<String, Object> map = new HashMap<String, Object>();
+		SubCourse subCourse = new SubCourse();
+		subCourse.setId(subcourseid);
+		subCourse.setDatestart(CommonUtil.stringToDate(datestart, "yyyy-MM-dd HH:mm:ss"));
+		subCourse.setDateend(CommonUtil.stringToDate(dateend, "yyyy-MM-dd HH:mm:ss"));
+		subCourse.setSubname(subname);
+		subCourse.setSubtype(subtype);
+		subCourse.setTeacherid(teacherid);
+		int i = this.subCourseService.updateByPrimaryKeySelective(subCourse);
+		if (i>0) {
+			map.put("code", "1111");
+			map.put("success", true);
+			map.put("message", "修改成功！");
+		} else {
+			map.put("code", "0000");
+			map.put("success", false);
+			map.put("message", "编辑失败，记录不存在！");
+		}
+		return map;
+	}
 }

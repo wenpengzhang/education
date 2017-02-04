@@ -472,29 +472,29 @@ public class CourseController extends BaseController {
 			course.setSubcount(subcount);
 			this.courseService.updateByPrimaryKey(course);
 
-			subCourseService.deleteByCourseKey(id);
-			for (int i = 0; i < subindex; i++) {
-				String temp = request.getParameter("teacherid" + i);
-				if (temp != null && !temp.equals("")) {
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					SubCourse subcourse = new SubCourse();
-					subcourse.setCourseid(id);
-					subcourse.setStratdate(request.getParameter("datestart" + i));
-					Date datestart = sdf.parse(request.getParameter("datestart" + i));
-					subcourse.setDatestart(datestart);
-					subcourse.setEnddate(request.getParameter("dateend" + i));
-					Date dateend = sdf.parse(request.getParameter("dateend" + i));
-					subcourse.setDateend(dateend);
-					subcourse.setSubname(request.getParameter("subname" + i));
-					subcourse.setSubtype(request.getParameter("subtype" + i));
-					subcourse.setTeacherid(request.getParameter("teacherid" + i));
-					subcourse.setSubprice(course.getPrice() / subcount);
-					subcourse.setSubstate("未进行");
-					String subid = UUID.randomUUID().toString().replace("-", "");
-					subcourse.setId(subid);
-					subCourseService.insert(subcourse);
-				}
-			}
+//			subCourseService.deleteByCourseKey(id);
+//			for (int i = 0; i < subindex; i++) {
+//				String temp = request.getParameter("teacherid" + i);
+//				if (temp != null && !temp.equals("")) {
+//					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//					SubCourse subcourse = new SubCourse();
+//					subcourse.setCourseid(id);
+//					subcourse.setStratdate(request.getParameter("datestart" + i));
+//					Date datestart = sdf.parse(request.getParameter("datestart" + i));
+//					subcourse.setDatestart(datestart);
+//					subcourse.setEnddate(request.getParameter("dateend" + i));
+//					Date dateend = sdf.parse(request.getParameter("dateend" + i));
+//					subcourse.setDateend(dateend);
+//					subcourse.setSubname(request.getParameter("subname" + i));
+//					subcourse.setSubtype(request.getParameter("subtype" + i));
+//					subcourse.setTeacherid(request.getParameter("teacherid" + i));
+//					subcourse.setSubprice(course.getPrice() / subcount);
+//					subcourse.setSubstate("未进行");
+//					String subid = UUID.randomUUID().toString().replace("-", "");
+//					subcourse.setId(subid);
+//					subCourseService.insert(subcourse);
+//				}
+//			}
 			map.put("code", "1111");
 			map.put("success", true);
 			map.put("message", "修改成功！");

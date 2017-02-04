@@ -541,7 +541,7 @@ function coursemanager() {
     	txtcontent=txtcontent+'<div style="float:left"><label>课程名称：<b>*</b></label><input  name="subname'+subindex+'" type="text" class="dfinput"/></div>';
     	txtcontent=txtcontent+'<div style="float:left"><label>课程类型：<b>*</b></label><select name="subtype'+subindex+'" class="scselect"><option value="核心课">核心课</option><option value="其他课">其他课</option></select></div>';
     	txtcontent=txtcontent+'<div style="float:left"><label>讲师：<b>*</b></label><div style="width: 240px;float:left"><select id="sltteacherid'+subindex+'" name="teacherid'+subindex+'" class="scselect"></select></div></div>'
-    	txtcontent=txtcontent+'<div><input type="button" value="删除" id="btndeletesub_'+subindex+'" class="btn"/>';
+    	txtcontent=txtcontent+'<div><input type="button" value="删除" id="btndeletesub_'+subindex+'" class="btn"/><input type="button" value="确认修改" id="btnupdatesub_'+subindex+'" class="btn"/><input name="substate'+subindex+'" type="text" readonly="true"/>';
     	$("#divnew").append('<div id="div_'+subindex+'" style="border:1px solid #b8dcff;float:left;">'+txtcontent+'</div>');
     	if(subcourse!=null){
     		$("input[name=datestart" + subindex + "]").val(subcourse.stratdate);
@@ -549,6 +549,7 @@ function coursemanager() {
         	$("input[name=subname" + subindex + "]").val(subcourse.subname);
         	$("select[name=subtype" + subindex + "]").val(subcourse.subtype);
         	$("select[name=teacherid" + subindex + "]").val(subcourse.teacherid);
+        	$("input[name=substate" + subindex + "]").val(subcourse.substate);
         	loadTeachers("sltteacherid"+subindex,subcourse.teacherid);
     	}else{
     		loadTeachers("sltteacherid"+subindex,null);
@@ -568,6 +569,17 @@ function coursemanager() {
 			deletesubcourse(str[1]);
 		})
 		
+		$("#btnupdatesub_"+subindex).on("click",function(){
+			var str = this.id.split("_");
+			var subcourseid = subcourse.id;
+			var datestart = $("input[name=datestart" + str[1] + "]").val();
+			var dateend = $("input[name=dateend" + str[1] + "]").val();
+			var subname = $("input[name=subname" + str[1] + "]").val();
+			var subtype = $("select[name=subtype" + str[1] + "]").val();
+			var teacherid = $("select[name=teacherid" + str[1] + "]").val();
+			updatesubcourse(subcourseid,datestart,dateend,subname,subtype,teacherid);
+		})
+		
 		subindex = subindex + 1;
 		subcount =subcount+1;
     }
@@ -576,6 +588,19 @@ function coursemanager() {
 
     	$("#div_"+index).remove();
     	subcount =subcount-1;
+    }
+    function updatesubcourse(subcourseid,datestart,dateend,subname,subtype,teacherid){
+    	var params = { "subcourseid": subcourseid, "datestart": datestart,"dateend": dateend,"subname":subname,"subtype":subtype,"teacherid":teacherid};
+        $.ajax({
+            url: "subcourse/edit", //要访问的后台地址
+            type: "POST", //使用get方法访问后台
+            cache: false,
+            dataType: "json",
+            data: params,
+            success: function (response) {//msg为返回的数据，在这里做数据绑定
+                alert(response.message);
+            } //返回成功完成
+        });
     }
 }
 

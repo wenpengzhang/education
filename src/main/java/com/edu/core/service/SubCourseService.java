@@ -29,6 +29,11 @@ public class SubCourseService {
 		return this.subCourseMapper.updateByPrimaryKey(record); 
 	}
 	
+	public int updateByPrimaryKeySelective(SubCourse record)
+	{
+		return this.subCourseMapper.updateByPrimaryKeySelective(record); 
+	}
+	
 	public int deleteByPrimaryKey(String id)
 	{
 		return this.subCourseMapper.deleteByPrimaryKey(id); 
