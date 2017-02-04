@@ -81,15 +81,20 @@ public class OrderingController extends BaseController {
 			request.setCharacterEncoding("UTF-8");
 			String skeyword = request.getParameter("keyword");
 			System.out.println("skeyword=" + skeyword);
+			String skeytjr = request.getParameter("skeytjr");
+			System.out.println("skeytjr=" + skeytjr);
 			int iPageIndex = Integer.parseInt(request.getParameter("pageindex"));
-			String sqlwhere =null;
-			if(!"".equals(skeyword)&&skeyword!=null){
-				 sqlwhere = "studentname like '%" + skeyword + "%' and coursename like '%" + skeyword
-						+ "%' and paystate='已付款'";
-			}else{
-				sqlwhere = "paystate='已付款'";
+			String sqlwhere = null;
+			if (!"".equals(skeytjr) && skeytjr != null) {
+				sqlwhere = "(tjr like '%" + skeytjr + "%') and paystate='已付款'";
+			} else {
+				if (!"".equals(skeyword) && skeyword != null) {
+					sqlwhere = "studentmobile like '%" + skeyword + "%' or coursename like '%" + skeyword
+							+ "%' and paystate='已付款'";
+				} else {
+					sqlwhere = "paystate='已付款'";
+				}
 			}
-			
 			List<ViewOrder> list = this.viewOrderService.selectBylimit(sqlwhere, (iPageIndex - 1) * iLimit,
 					iPageIndex * iLimit);
 			for (ViewOrder item : list) {

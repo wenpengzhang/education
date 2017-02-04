@@ -38,306 +38,305 @@ public class CourseController extends BaseController {
 
 	@Resource
 	private SubCourseService subCourseService;
-	
+
 	@Resource
 	private CourseService courseService;
-	
+
 	@Resource
 	private TeacherService teacherService;
-	
+
 	@Resource
 	private OrderingService orderingService;
-	
+
 	public CourseController() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/getAllList")
-	public Map<String,Object> getAllList(HttpServletRequest request,Model model){
+	public Map<String, Object> getAllList(HttpServletRequest request, Model model) {
 		String sqlwhere = "1=1";
-		List<Course> list=this.courseService.selectBySql(sqlwhere);
-		Map<String,Object> map = new HashMap<String,Object>(); 
+		List<Course> list = this.courseService.selectBySql(sqlwhere);
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", list.size());
 		map.put("records", list);
 		return map;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/getCourseByConditions")
-	public Map<String,Object> getCourseByConditions(HttpServletRequest request,Model model){
+	public Map<String, Object> getCourseByConditions(HttpServletRequest request, Model model) {
 		String firsttype = request.getParameter("firsttype");
 		String vsubject = request.getParameter("vsubject");
 		String cmode = request.getParameter("cmode");
 		String vgrade = request.getParameter("vgrade");
-		String sqlwhere ="published ='发布'";
-		if(firsttype!=null&&!firsttype.equals("")){
-			sqlwhere+=" and firsttype like '%"+firsttype+"%'";
+		String sqlwhere = "published ='发布'";
+		if (firsttype != null && !firsttype.equals("")) {
+			sqlwhere += " and firsttype like '%" + firsttype + "%'";
 		}
-		if(vsubject!=null&&!vsubject.equals("")){
-			sqlwhere+="and vsubject like '%"+vsubject+"%'";
+		if (vsubject != null && !vsubject.equals("")) {
+			sqlwhere += "and vsubject like '%" + vsubject + "%'";
 		}
-		if(cmode!=null&&!cmode.equals("")){
-			sqlwhere+="and cmode like '%"+cmode+"%'";
+		if (cmode != null && !cmode.equals("")) {
+			sqlwhere += "and cmode like '%" + cmode + "%'";
 		}
-		if(vgrade!=null&&!vgrade.equals("")){
-			sqlwhere+="and vgrade like '%"+vgrade+"%'";
+		if (vgrade != null && !vgrade.equals("")) {
+			sqlwhere += "and vgrade like '%" + vgrade + "%'";
 		}
-		List<Course> list=this.courseService.selectBySql(sqlwhere);
- 
-		for(Course item:list)
-		{
-			String teacherids="";
+		List<Course> list = this.courseService.selectBySql(sqlwhere);
+
+		for (Course item : list) {
+			String teacherids = "";
 			List<Teacher> teacherlist = new ArrayList<Teacher>();
-			List<SubCourse> sublist = subCourseService.selectBySql("courseid='"+item.getId()+"'");
-			for(int i=0;i<sublist.size();i++)
-			{
+			List<SubCourse> sublist = subCourseService.selectBySql("courseid='" + item.getId() + "'");
+			for (int i = 0; i < sublist.size(); i++) {
 				Teacher teacher = teacherService.selectByPrimaryKey(sublist.get(i).getTeacherid());
-				if(!teacherids.contains(teacher.getId()))
-				{
-					teacherids=teacherids+","+teacher.getId();
+				if (!teacherids.contains(teacher.getId())) {
+					teacherids = teacherids + "," + teacher.getId();
 					teacherlist.add(teacher);
 				}
 			}
 			item.setTeachers(teacherlist);
 		}
-		Map<String,Object> map = new HashMap<String,Object>(); 
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", list.size());
 		map.put("records", list);
 		return map;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/getCourseByConditionsAndTeacherID")
-	public Map<String,Object> getCourseByConditionsAndTeacherID(HttpServletRequest request,Model model){
+	public Map<String, Object> getCourseByConditionsAndTeacherID(HttpServletRequest request, Model model) {
 		String teacherid = request.getParameter("teacherid");
 		String firsttype = request.getParameter("firsttype");
 		String vsubject = request.getParameter("vsubject");
 		String cmode = request.getParameter("cmode");
 		String vgrade = request.getParameter("vgrade");
-		String sqlwhere ="published ='发布'";
-		if(firsttype!=null&&!firsttype.equals("")){
-			sqlwhere+=" and firsttype like '%"+firsttype+"%'";
+		String sqlwhere = "published ='发布'";
+		if (firsttype != null && !firsttype.equals("")) {
+			sqlwhere += " and firsttype like '%" + firsttype + "%'";
 		}
-		if(vsubject!=null&&!vsubject.equals("")){
-			sqlwhere+="and vsubject like '%"+vsubject+"%'";
+		if (vsubject != null && !vsubject.equals("")) {
+			sqlwhere += "and vsubject like '%" + vsubject + "%'";
 		}
-		if(cmode!=null&&!cmode.equals("")){
-			sqlwhere+="and cmode like '%"+cmode+"%'";
+		if (cmode != null && !cmode.equals("")) {
+			sqlwhere += "and cmode like '%" + cmode + "%'";
 		}
-		if(vgrade!=null&&!vgrade.equals("")){
-			sqlwhere+="and vgrade like '%"+vgrade+"%'";
+		if (vgrade != null && !vgrade.equals("")) {
+			sqlwhere += "and vgrade like '%" + vgrade + "%'";
 		}
-		List<Course> list=this.courseService.selectBySqlAndTeacherid(sqlwhere, teacherid);
-		for(Course item:list)
-		{
-			String teacherids="";
+		List<Course> list = this.courseService.selectBySqlAndTeacherid(sqlwhere, teacherid);
+		for (Course item : list) {
+			String teacherids = "";
 			List<Teacher> teacherlist = new ArrayList<Teacher>();
-			List<SubCourse> sublist = subCourseService.selectBySql("courseid='"+item.getId()+"'");
-			for(int i=0;i<sublist.size();i++)
-			{
+			List<SubCourse> sublist = subCourseService.selectBySql("courseid='" + item.getId() + "'");
+			for (int i = 0; i < sublist.size(); i++) {
 				Teacher teacher = teacherService.selectByPrimaryKey(sublist.get(i).getTeacherid());
-				if(!teacherids.contains(teacher.getId()))
-				{
-					teacherids=teacherids+","+teacher.getId();
+				if (!teacherids.contains(teacher.getId())) {
+					teacherids = teacherids + "," + teacher.getId();
 					teacherlist.add(teacher);
 				}
 			}
 			item.setTeachers(teacherlist);
 		}
-		Map<String,Object> map = new HashMap<String,Object>(); 
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", list.size());
 		map.put("records", list);
 		return map;
 	}
-	
+
 	/**
 	 * 根据学生id得到所有发布状态的订单
+	 * 
 	 * @param request
 	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getOrderedCourseByConditionsAndStudentID")
-	public Map<String,Object> getCourseByConditionsAndStudentID(HttpServletRequest request,Model model){
+	public Map<String, Object> getCourseByConditionsAndStudentID(HttpServletRequest request, Model model) {
 		String studentid = request.getParameter("studentid");
 		String firsttype = request.getParameter("firsttype");
 		String vsubject = request.getParameter("vsubject");
 		String cmode = request.getParameter("cmode");
 		String vgrade = request.getParameter("vgrade");
-		String sqlwhere ="published ='发布'";
-		if(firsttype!=null&&!firsttype.equals("")){
-			sqlwhere+=" and firsttype like '%"+firsttype+"%'";
+		String sqlwhere = "published ='发布'";
+		if (firsttype != null && !firsttype.equals("")) {
+			sqlwhere += " and firsttype like '%" + firsttype + "%'";
 		}
-		if(vsubject!=null&&!vsubject.equals("")){
-			sqlwhere+="and vsubject like '%"+vsubject+"%'";
+		if (vsubject != null && !vsubject.equals("")) {
+			sqlwhere += "and vsubject like '%" + vsubject + "%'";
 		}
-		if(cmode!=null&&!cmode.equals("")){
-			sqlwhere+="and cmode like '%"+cmode+"%'";
+		if (cmode != null && !cmode.equals("")) {
+			sqlwhere += "and cmode like '%" + cmode + "%'";
 		}
-		if(vgrade!=null&&!vgrade.equals("")){
-			sqlwhere+="and vgrade like '%"+vgrade+"%'";
+		if (vgrade != null && !vgrade.equals("")) {
+			sqlwhere += "and vgrade like '%" + vgrade + "%'";
 		}
-		List<Course> list=this.courseService.selectBySqlAndStudentid(sqlwhere, studentid);
-		for(Course item:list)
-		{
-			String teacherids="";
+		List<Course> list = this.courseService.selectBySqlAndStudentid(sqlwhere, studentid);
+		for (Course item : list) {
+			String teacherids = "";
 			List<Teacher> teacherlist = new ArrayList<Teacher>();
-			List<SubCourse> sublist = subCourseService.selectBySql("courseid='"+item.getId()+"'");
-			for(int i=0;i<sublist.size();i++)
-			{
+			List<SubCourse> sublist = subCourseService.selectBySql("courseid='" + item.getId() + "'");
+			for (int i = 0; i < sublist.size(); i++) {
 				Teacher teacher = teacherService.selectByPrimaryKey(sublist.get(i).getTeacherid());
-				if(!teacherids.contains(teacher.getId()))
-				{
-					teacherids=teacherids+","+teacher.getId();
+				if (!teacherids.contains(teacher.getId())) {
+					teacherids = teacherids + "," + teacher.getId();
 					teacherlist.add(teacher);
 				}
 			}
 			item.setTeachers(teacherlist);
 		}
-		Map<String,Object> map = new HashMap<String,Object>(); 
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", list.size());
 		map.put("records", list);
 		return map;
 	}
-	
+
 	/**
 	 * 根据学生id得到所有发布状态的已支付订单
+	 * 
 	 * @param request
 	 * @param model
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/getPayOrderedCourseByConditionsAndStudentID")
-	public Map<String,Object> getNotPayOrderedCourseByConditionsAndStudentID(HttpServletRequest request,Model model){
+	public Map<String, Object> getNotPayOrderedCourseByConditionsAndStudentID(HttpServletRequest request, Model model) {
 		String studentid = request.getParameter("studentid");
 		String firsttype = request.getParameter("firsttype");
 		String vsubject = request.getParameter("vsubject");
 		String cmode = request.getParameter("cmode");
 		String vgrade = request.getParameter("vgrade");
-		String sqlwhere ="published ='发布'";
-		
-/*		 List<Ordering> orderlist = orderingService.selectBySql("paystate = '已付款'");
-		 List<Course> courselist = new ArrayList<>();
-		 for(int i = 0; i< orderlist.size(); i++ )
-		 {
-			 Ordering ordering = orderlist.get(i);
-		 }*/
-		
-		if(firsttype!=null&&!firsttype.equals("")){
-			sqlwhere+=" and firsttype like '%"+firsttype+"%'";
+		String sqlwhere = "published ='发布'";
+
+		/*
+		 * List<Ordering> orderlist = orderingService.selectBySql(
+		 * "paystate = '已付款'"); List<Course> courselist = new ArrayList<>();
+		 * for(int i = 0; i< orderlist.size(); i++ ) { Ordering ordering =
+		 * orderlist.get(i); }
+		 */
+
+		if (firsttype != null && !firsttype.equals("")) {
+			sqlwhere += " and firsttype like '%" + firsttype + "%'";
 		}
-		if(vsubject!=null&&!vsubject.equals("")){
-			sqlwhere+="and vsubject like '%"+vsubject+"%'";
+		if (vsubject != null && !vsubject.equals("")) {
+			sqlwhere += "and vsubject like '%" + vsubject + "%'";
 		}
-		if(cmode!=null&&!cmode.equals("")){
-			sqlwhere+="and cmode like '%"+cmode+"%'";
+		if (cmode != null && !cmode.equals("")) {
+			sqlwhere += "and cmode like '%" + cmode + "%'";
 		}
-		if(vgrade!=null&&!vgrade.equals("")){
-			sqlwhere+="and vgrade like '%"+vgrade+"%'";
+		if (vgrade != null && !vgrade.equals("")) {
+			sqlwhere += "and vgrade like '%" + vgrade + "%'";
 		}
-		List<Course> list=this.courseService.selectBySqlAndStudentid(sqlwhere, studentid);
+		List<Course> list = this.courseService.selectBySqlAndStudentid(sqlwhere, studentid);
 		List<Course> listResult = new ArrayList<>();
-		for(Course item:list)
-		{
-			String teacherids="";
+		for (Course item : list) {
+			String teacherids = "";
 			List<Teacher> teacherlist = new ArrayList<Teacher>();
-			List<SubCourse> sublist = subCourseService.selectBySql("courseid='"+item.getId()+"'");
-			for(int i=0;i<sublist.size();i++)
-			{
+			List<SubCourse> sublist = subCourseService.selectBySql("courseid='" + item.getId() + "'");
+			for (int i = 0; i < sublist.size(); i++) {
 				Teacher teacher = teacherService.selectByPrimaryKey(sublist.get(i).getTeacherid());
-				if(!teacherids.contains(teacher.getId()))
-				{
-					teacherids=teacherids+","+teacher.getId();
+				if (!teacherids.contains(teacher.getId())) {
+					teacherids = teacherids + "," + teacher.getId();
 					teacherlist.add(teacher);
 				}
 			}
 			item.setTeachers(teacherlist);
-			List<Ordering> orderlist = orderingService.selectBySql("courseid='" + item.getId() +"' and studentid ='" +studentid  +"'" );
-			if(orderlist.get(0).getPaystate().equals("已付款")){
+			List<Ordering> orderlist = orderingService
+					.selectBySql("courseid='" + item.getId() + "' and studentid ='" + studentid + "'");
+			if (orderlist.get(0).getPaystate().equals("已付款")) {
 				listResult.add(item);
 			}
 		}
-		Map<String,Object> map = new HashMap<String,Object>(); 
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", listResult.size());
 		map.put("records", listResult);
 		return map;
 	}
+
 	@ResponseBody
 	@RequestMapping(value = "/getListbyPage")
-	public Map<String,Object> getListbyPage(HttpServletRequest request,Model model){
+	public Map<String, Object> getListbyPage(HttpServletRequest request, Model model) {
 		String skeyword = request.getParameter("keyword");
-		int iPageIndex = Integer.parseInt(request.getParameter("pageindex")) ;
-		String sqlwhere = "(name like '%"+skeyword+"%'";
-		sqlwhere+= " or vstage like '%"+skeyword+"%'";
-		sqlwhere+= " or vsubject like '%"+skeyword+"%'";
-		sqlwhere+= " or vgrade like '%"+skeyword+"%'";
-		sqlwhere+= " or cmode like '%"+skeyword+"%'";
-		sqlwhere+= " or published like '%"+skeyword+"%'";
-		sqlwhere+= " or showtop like '%"+skeyword+"%')";
-		List<Course> list=this.courseService.selectBylimit(sqlwhere, (iPageIndex - 1) * iLimit, iPageIndex * iLimit);
-		for(Course item:list)
-		{
-			String teacherids="";
-			String teachernames="";
-			List<SubCourse> sublist = subCourseService.selectBySql("courseid='"+item.getId()+"'");
-			for(int i=0;i<sublist.size();i++)
-			{
+		int iPageIndex = Integer.parseInt(request.getParameter("pageindex"));
+		String sqlwhere = "(name like '%" + skeyword + "%'";
+		sqlwhere += " or vstage like '%" + skeyword + "%'";
+		sqlwhere += " or vsubject like '%" + skeyword + "%'";
+		sqlwhere += " or vgrade like '%" + skeyword + "%'";
+		sqlwhere += " or cmode like '%" + skeyword + "%'";
+		sqlwhere += " or published like '%" + skeyword + "%'";
+		sqlwhere += " or showtop like '%" + skeyword + "%')";
+		List<Course> list = this.courseService.selectBylimit(sqlwhere, (iPageIndex - 1) * iLimit, iPageIndex * iLimit);
+		for (Course item : list) {
+			String teacherids = "";
+			String teachernames = "";
+			List<SubCourse> sublist = subCourseService.selectBySql("courseid='" + item.getId() + "'");
+			for (int i = 0; i < sublist.size(); i++) {
 				Teacher teacher = teacherService.selectByPrimaryKey(sublist.get(i).getTeacherid());
-				if(!teacherids.contains(teacher.getId()))
-				{
-					teachernames+=teacher.getRealname()+",";
-					teacherids+=teacher.getId()+",";
+				if (!teacherids.contains(teacher.getId())) {
+					teachernames += teacher.getRealname() + ",";
+					teacherids += teacher.getId() + ",";
 				}
 			}
-			if(!teachernames.equals(""))
-			{
-				teachernames = teachernames.substring(0,teachernames.length()-1);
+			if (!teachernames.equals("")) {
+				teachernames = teachernames.substring(0, teachernames.length() - 1);
 			}
 			item.setTeacherid(teachernames);
 		}
-		Map<String,Object> map = new HashMap<String,Object>(); 
+		Map<String, Object> map = new HashMap<String, Object>();
+		// 计算总页数
+		List<Course> list1 = this.courseService.selectBySql(sqlwhere);
+		// 计算总页数
+		int totalpage = 0;
+		if (list1.size() > 0) {
+			if (list1.size() % 20 > 0) {
+				totalpage = (list1.size() / 20) + 1;
+			} else {
+				totalpage = list1.size() / 20;
+			}
+
+		}
 		map.put("total", list.size());
+		map.put("totalpage", totalpage);
 		map.put("records", list);
 		return map;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/show")
-	public Map<String,Object> show(HttpServletRequest request,Model model){
-		String id=request.getParameter("id");
-		System.out.println("id="+id);
+	public Map<String, Object> show(HttpServletRequest request, Model model) {
+		String id = request.getParameter("id");
+		System.out.println("id=" + id);
 		Course course = this.courseService.selectByPrimaryKey(id);
-		List<SubCourse> list = subCourseService.selectBySql("courseid='"+id+"'");
+		List<SubCourse> list = subCourseService.selectBySql("courseid='" + id + "'");
 		course.setSubCourse(list);
-		String uploadpath = request.getContextPath()+"/upload/";
-		if(course.getPichead() != null && !course.getPichead().equals("")){
+		String uploadpath = request.getContextPath() + "/upload/";
+		if (course.getPichead() != null && !course.getPichead().equals("")) {
 			String[] piclist = course.getPichead().split(",");
-			for(int i=0;i<piclist.length;i++){
-				piclist[i]=uploadpath+piclist[i];
+			for (int i = 0; i < piclist.length; i++) {
+				piclist[i] = uploadpath + piclist[i];
 			}
 			course.setPiclist(piclist);
-		} 
-		String teacherids="";
+		}
+		String teacherids = "";
 		List<Teacher> teacherlist = new ArrayList<Teacher>();
-		List<SubCourse> sublist = subCourseService.selectBySql("courseid='"+course.getId()+"'");
-		for(int i=0;i<sublist.size();i++)
-		{
+		List<SubCourse> sublist = subCourseService.selectBySql("courseid='" + course.getId() + "'");
+		for (int i = 0; i < sublist.size(); i++) {
 			Teacher teacher = teacherService.selectByPrimaryKey(sublist.get(i).getTeacherid());
-			if(!teacherids.contains(teacher.getId()))
-			{
-				teacherids=teacherids+","+teacher.getId();
+			if (!teacherids.contains(teacher.getId())) {
+				teacherids = teacherids + "," + teacher.getId();
 				teacherlist.add(teacher);
 			}
 		}
 		course.setTeachers(teacherlist);
-		Map<String,Object> map = new HashMap<String,Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", course);
 		return map;
 	}
-	
-	public Course upload(HttpServletRequest request,Course course){
-		String uploadpath = request.getSession().getServletContext().getRealPath("/")+ "\\upload";
+
+	public Course upload(HttpServletRequest request, Course course) {
+		String uploadpath = request.getSession().getServletContext().getRealPath("/") + "\\upload";
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		// 取得request中的所有文件名
 		Iterator<String> iter = multipartRequest.getFileNames();
@@ -351,20 +350,17 @@ public class CourseController extends BaseController {
 				String myFileName = file.getOriginalFilename();
 				System.out.println(myFileName);
 				// 重命名上传后的文件名
-				String newfileName = FileManager.getRandomFileName()+"."+ FileManager.getExtensionName(myFileName);
+				String newfileName = FileManager.getRandomFileName() + "." + FileManager.getExtensionName(myFileName);
 				// 定义上传路径
 				String savepath = uploadpath + "/" + newfileName;
 				try {
 					File localFile = new File(savepath);
 					file.transferTo(localFile);
-					String pichhead =course.getPichead();
-					if(pichhead!=null&&!pichhead.equals(""))
-					{
-						pichhead=pichhead+","+newfileName;
-					}
-					else
-					{
-						pichhead=newfileName;
+					String pichhead = course.getPichead();
+					if (pichhead != null && !pichhead.equals("")) {
+						pichhead = pichhead + "," + newfileName;
+					} else {
+						pichhead = newfileName;
 					}
 					course.setPichead(pichhead);
 				} catch (IllegalStateException e) {
@@ -380,16 +376,17 @@ public class CourseController extends BaseController {
 			System.out.println(finaltime - pre);
 		}
 		return course;
-    }
-	
+	}
+
 	@ResponseBody
 	@RequestMapping("/add")
-	public Map<String,Object> insert(HttpServletRequest request,Model model) throws ParseException{
-		//Course renameProject = this.courseService.selectByCode(request.getParameter("id"));
-		Map<String,Object> map = new HashMap<String,Object>(); 
-		if(!request.getParameter("name").equals(null)){
-			Course course=new Course();
-			//course.setTeacherid(request.getParameter("teacherid"));
+	public Map<String, Object> insert(HttpServletRequest request, Model model) throws ParseException {
+		// Course renameProject =
+		// this.courseService.selectByCode(request.getParameter("id"));
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (!request.getParameter("name").equals(null)) {
+			Course course = new Course();
+			// course.setTeacherid(request.getParameter("teacherid"));
 			course.setName(request.getParameter("name"));
 			course.setVstage(request.getParameter("vstage"));
 			course.setVsubject(request.getParameter("vsubject"));
@@ -405,31 +402,29 @@ public class CourseController extends BaseController {
 			course.setDiscription(request.getParameter("discription"));
 			course.setPublished("隐藏");
 			course.setShowtop("");
-			course = upload(request,course);
-			String id=UUID.randomUUID().toString().replace("-", "");
+			course = upload(request, course);
+			String id = UUID.randomUUID().toString().replace("-", "");
 			course.setId(id);
 			Integer subindex = Integer.parseInt(request.getParameter("subindex"));
-			Integer subcount=Integer.parseInt(request.getParameter("subcount"));
-			
+			Integer subcount = Integer.parseInt(request.getParameter("subcount"));
+
 			course.setSubnumber(0);
 			course.setSubcount(subcount);
 			this.courseService.insert(course);
-			
-			for(int i=0;i<subindex;i++)
-			{
-				String temp = request.getParameter("teacherid"+i);
-				if(temp!=null&&!temp.equals(""))
-				{
-					SubCourse subcourse=new SubCourse();
+
+			for (int i = 0; i < subindex; i++) {
+				String temp = request.getParameter("teacherid" + i);
+				if (temp != null && !temp.equals("")) {
+					SubCourse subcourse = new SubCourse();
 					subcourse.setCourseid(id);
-					subcourse.setStratdate(request.getParameter("datestart"+i));
-					subcourse.setEnddate(request.getParameter("dateend"+i));
-					subcourse.setSubname(request.getParameter("subname"+i));
-					subcourse.setSubtype(request.getParameter("subtype"+i));
-					subcourse.setTeacherid(request.getParameter("teacherid"+i));
-					subcourse.setSubprice(course.getPrice()/subcount);
+					subcourse.setStratdate(request.getParameter("datestart" + i));
+					subcourse.setEnddate(request.getParameter("dateend" + i));
+					subcourse.setSubname(request.getParameter("subname" + i));
+					subcourse.setSubtype(request.getParameter("subtype" + i));
+					subcourse.setTeacherid(request.getParameter("teacherid" + i));
+					subcourse.setSubprice(course.getPrice() / subcount);
 					subcourse.setSubstate("未进行");
-					String subid=UUID.randomUUID().toString().replace("-", "");
+					String subid = UUID.randomUUID().toString().replace("-", "");
 					subcourse.setId(subid);
 					subCourseService.insert(subcourse);
 				}
@@ -438,22 +433,21 @@ public class CourseController extends BaseController {
 			map.put("code", "1111");
 			map.put("success", true);
 			map.put("message", "添加成功！");
-		}else{
+		} else {
 			map.put("code", "0000");
 			map.put("success", false);
 			map.put("message", "添加失败，课程名称错误！");
 		}
 		return map;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/edit")
-	public Map<String,Object> edit(HttpServletRequest request,Model model) throws ParseException{
-		String id=request.getParameter("id");
+	public Map<String, Object> edit(HttpServletRequest request, Model model) throws ParseException {
+		String id = request.getParameter("id");
 		Course course = this.courseService.selectByPrimaryKey(id);
-		Map<String,Object> map = new HashMap<String,Object>(); 
-		if(!course.equals(null))
-		{
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (!course.equals(null)) {
 			course.setTeacherid(request.getParameter("teacherid"));
 			course.setName(request.getParameter("name"));
 			course.setVstage(request.getParameter("vstage"));
@@ -462,43 +456,41 @@ public class CourseController extends BaseController {
 			course.setCmode(request.getParameter("cmode"));
 			course.setFirsttype(request.getParameter("firsttype"));
 			course.setPrice(Long.parseLong(request.getParameter("price")));
-			//course.setCnumber(0);
+			// course.setCnumber(0);
 			course.setCcount(Integer.parseInt(request.getParameter("ccount")));
-			course = upload(request,course);
+			course = upload(request, course);
 			course.setCcount(Integer.parseInt(request.getParameter("ccount")));
 			course.setCversion(request.getParameter("cversion"));
 			course.setArea(request.getParameter("area"));
 			course.setTimezones(request.getParameter("timezones"));
 			course.setDiscription(request.getParameter("discription"));
-			
+
 			Integer subindex = Integer.parseInt(request.getParameter("subindex"));
-			Integer subcount=Integer.parseInt(request.getParameter("subcount"));
-			
+			Integer subcount = Integer.parseInt(request.getParameter("subcount"));
+
 			course.setSubnumber(0);
 			course.setSubcount(subcount);
 			this.courseService.updateByPrimaryKey(course);
-			
+
 			subCourseService.deleteByCourseKey(id);
-			for(int i=0;i<subindex;i++)
-			{
-				String temp = request.getParameter("teacherid"+i);
-				if(temp!=null&&!temp.equals(""))
-				{
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
-					SubCourse subcourse=new SubCourse();
+			for (int i = 0; i < subindex; i++) {
+				String temp = request.getParameter("teacherid" + i);
+				if (temp != null && !temp.equals("")) {
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					SubCourse subcourse = new SubCourse();
 					subcourse.setCourseid(id);
-					subcourse.setStratdate(request.getParameter("datestart"+i));
-					Date datestart = sdf.parse(request.getParameter("datestart"+i));
+					subcourse.setStratdate(request.getParameter("datestart" + i));
+					Date datestart = sdf.parse(request.getParameter("datestart" + i));
 					subcourse.setDatestart(datestart);
-					subcourse.setEnddate(request.getParameter("dateend"+i));
-					Date dateend = sdf.parse(request.getParameter("dateend"+i));
+					subcourse.setEnddate(request.getParameter("dateend" + i));
+					Date dateend = sdf.parse(request.getParameter("dateend" + i));
 					subcourse.setDateend(dateend);
-					subcourse.setSubname(request.getParameter("subname"+i));
-					subcourse.setSubtype(request.getParameter("subtype"+i));
-					subcourse.setTeacherid(request.getParameter("teacherid"+i));
-					subcourse.setSubprice(course.getPrice()/subcount);
+					subcourse.setSubname(request.getParameter("subname" + i));
+					subcourse.setSubtype(request.getParameter("subtype" + i));
+					subcourse.setTeacherid(request.getParameter("teacherid" + i));
+					subcourse.setSubprice(course.getPrice() / subcount);
 					subcourse.setSubstate("未进行");
-					String subid=UUID.randomUUID().toString().replace("-", "");
+					String subid = UUID.randomUUID().toString().replace("-", "");
 					subcourse.setId(subid);
 					subCourseService.insert(subcourse);
 				}
@@ -506,9 +498,7 @@ public class CourseController extends BaseController {
 			map.put("code", "1111");
 			map.put("success", true);
 			map.put("message", "修改成功！");
-		}
-		else
-		{
+		} else {
 			map.put("code", "0000");
 			map.put("success", false);
 			map.put("message", "编辑失败，记录不存在！");
@@ -518,28 +508,22 @@ public class CourseController extends BaseController {
 
 	@ResponseBody
 	@RequestMapping("/delete")
-	public Map<String,Object> delete(HttpServletRequest request,Model model){
-		
-		Map<String,Object> map = new HashMap<String,Object>();  
-		String id=request.getParameter("id");
-		if(orderingService.selectBySql("courseid='"+id+"'").size()>0)
-		{
+	public Map<String, Object> delete(HttpServletRequest request, Model model) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		String id = request.getParameter("id");
+		if (orderingService.selectBySql("courseid='" + id + "'").size() > 0) {
 			map.put("code", "0000");
 			map.put("success", false);
 			map.put("message", "删除失败，原因该课程已存在订单！");
-		}
-		else
-		{
+		} else {
 			subCourseService.deleteByCourseKey(id);
-			int result=this.courseService.deleteByPrimaryKey(id);
-			if(result>0)
-			{
+			int result = this.courseService.deleteByPrimaryKey(id);
+			if (result > 0) {
 				map.put("code", "1111");
 				map.put("success", true);
 				map.put("message", "删除成功！");
-			}
-			else
-			{
+			} else {
 				map.put("code", "0000");
 				map.put("success", false);
 				map.put("message", "删除失败！");
@@ -550,57 +534,51 @@ public class CourseController extends BaseController {
 
 	@ResponseBody
 	@RequestMapping("/publish")
-	public Map<String,Object> publish(HttpServletRequest request,Model model) throws ParseException{
-		String id=request.getParameter("id");
+	public Map<String, Object> publish(HttpServletRequest request, Model model) throws ParseException {
+		String id = request.getParameter("id");
 		Course course = this.courseService.selectByPrimaryKey(id);
-		Map<String,Object> map = new HashMap<String,Object>(); 
-		if(course!=null)
-		{
-			if(course.getPublished()!=null&&course.getPublished().equals("发布")){
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (course != null) {
+			if (course.getPublished() != null && course.getPublished().equals("发布")) {
 				course.setPublished("隐藏");
-			}else {
+			} else {
 				course.setPublished("发布");
 			}
 			this.courseService.updateByPrimaryKey(course);
 			map.put("code", "1111");
 			map.put("success", true);
 			map.put("message", "发布隐藏成功！");
-		}
-		else
-		{
+		} else {
 			map.put("code", "0000");
 			map.put("success", false);
 			map.put("message", "发布隐藏失败，原因记录不存在");
 		}
 		return map;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/top")
-	public Map<String,Object> top(HttpServletRequest request,Model model) throws ParseException{
-		String id=request.getParameter("id");
-		
+	public Map<String, Object> top(HttpServletRequest request, Model model) throws ParseException {
+		String id = request.getParameter("id");
+
 		Course course = this.courseService.selectByPrimaryKey(id);
-		Map<String,Object> map = new HashMap<String,Object>(); 
-		if(course!=null)
-		{
-			if(course.getShowtop()!=null&&course.getShowtop().equals("置顶")){
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (course != null) {
+			if (course.getShowtop() != null && course.getShowtop().equals("置顶")) {
 				course.setShowtop("");
-			}else {
+			} else {
 				course.setShowtop("置顶");
 			}
 			this.courseService.updateByPrimaryKey(course);
 			map.put("code", "1111");
 			map.put("success", true);
 			map.put("message", "置顶成功！");
-		}
-		else
-		{
+		} else {
 			map.put("code", "0000");
 			map.put("success", false);
 			map.put("message", "置顶失败，原因记录不存在！");
 		}
 		return map;
 	}
-	
+
 }

@@ -6,7 +6,7 @@ function orderingmanager() {
 
     var pageIndex = 1; //当前显示的页码
 
-    var pageCount = 0; //总页数
+    var pageCount = 3; //总页数
 
     var listhref = "content/orderinglist.jsp";
     
@@ -153,7 +153,7 @@ function orderingmanager() {
         var params = getAjaxParams();
         $.ajax({
             url: "ordering/getListbyPage", //要访问的后台地址
-            type: "GET", //使用get方法访问后台
+            type: "POST", //使用get方法访问后台
             cache: false,
             dataType: "json",
             data: params,
@@ -166,7 +166,7 @@ function orderingmanager() {
                         var chkselect = "<input name='id' type='checkbox' value='" + n.id + "'/>"
                         row.find("#id").append(chkselect);
                         row.find("#ordercode").text(n.ordercode);
-                        row.find("#studentname").text(n.studentname);
+                        row.find("#studentmobile").text(n.studentmobile);
                         row.find("#teacherid").text(n.teacherid);
                         row.find("#coursename").text(n.coursename);
                         row.find("#vsubject").text(n.vsubject);
@@ -176,11 +176,12 @@ function orderingmanager() {
                         var date = timeStamp2String(n.ordertime.toString())
                         row.find("#ordertime").text(date);
                         row.find("#progress").text(n.progress+"/"+n.sumprogress);
-                        row.find("#pstate").text(n.pstate);
+                        //row.find("#pstate").text(n.pstate);
                         row.attr("id", "ready"); //改变绑定好数据的行的id
                         row.appendTo("#datas"); //添加到模板的容器中
                     });
-                    $("#lblrcdcount").text(response.recordcount);
+                    $("#lblrcdcount").text(response.total);
+                    pageCount = response.totalpage;
                 }
             } //返回成功完成
         });
@@ -189,7 +190,8 @@ function orderingmanager() {
     //获取参数
     function getAjaxParams() {
         var skeyword = $("#txtword").val();
-        var data = { "Method": "list", "keyword": skeyword,"pageindex": pageIndex };
+        var skeytjr = $("#txttjr").val();
+        var data = { "Method": "list", "keyword": skeyword,"skeytjr":skeytjr,"pageindex": pageIndex};
         return data;
     };
 

@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.edu.core.domain.Red;
 import com.edu.core.domain.StatOrder;
 import com.edu.core.domain.Student;
+import com.edu.core.domain.ViewOrder;
 import com.edu.core.service.OrderingService;
 import com.edu.core.service.RedService;
 import com.edu.core.service.StudentService;
@@ -68,15 +69,22 @@ public class StudentController extends BaseController {
 	@RequestMapping(value = "/getListbyPage")
 	public Map<String, Object> getListbyPage(HttpServletRequest request, Model model) {
 		String skeyword = request.getParameter("keyword");
+		String skeytjr = request.getParameter("skeytjr");
+		System.out.println("skeytjr=" + skeytjr);
 		int iPageIndex = Integer.parseInt(request.getParameter("pageindex"));
-		String sqlwhere = "(realname like '%" + skeyword + "%'";
-		sqlwhere += " or accounts like '%" + skeyword + "%'";
-		sqlwhere += " or mobile like '%" + skeyword + "%'";
-		sqlwhere += " or nickname like '%" + skeyword + "%'";
-		sqlwhere += " or mobileother like '%" + skeyword + "%'";
-		sqlwhere += " or school like '%" + skeyword + "%'";
-		sqlwhere += " or grade like '%" + skeyword + "%'";
-		sqlwhere += " or address like '%" + skeyword + "%')";
+		String sqlwhere = null;
+		if (!"".equals(skeytjr) && skeytjr != null) {
+			sqlwhere = "(tjr like '%" + skeytjr + "%')";
+		} else {
+			sqlwhere = "(realname like '%" + skeyword + "%'";
+			sqlwhere += " or accounts like '%" + skeyword + "%'";
+			sqlwhere += " or mobile like '%" + skeyword + "%'";
+			sqlwhere += " or nickname like '%" + skeyword + "%'";
+			sqlwhere += " or mobileother like '%" + skeyword + "%'";
+			sqlwhere += " or school like '%" + skeyword + "%'";
+			sqlwhere += " or grade like '%" + skeyword + "%'";
+			sqlwhere += " or address like '%" + skeyword + "%')";
+		}
 		List<Student> list = this.studentService.selectBylimit(sqlwhere, (iPageIndex - 1) * iLimit,
 				iPageIndex * iLimit);
 		for (Student item : list) {
@@ -84,7 +92,20 @@ public class StudentController extends BaseController {
 			item.setStatOrder(statorder);
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
+		// 计算总页数
+		List<Student> list1 = this.studentService.selectBySql(sqlwhere);
+		// 计算总页数
+		int totalpage = 0;
+		if (list1.size() > 0) {
+			if (list1.size() % 20 > 0) {
+				totalpage = (list1.size() / 20) + 1;
+			} else {
+				totalpage = list1.size() / 20;
+			}
+
+		}
 		map.put("total", list.size());
+		map.put("totalpage", totalpage);
 		map.put("records", list);
 		return map;
 	}
@@ -153,6 +174,7 @@ public class StudentController extends BaseController {
 			Student newstudent = new Student();
 			newstudent.setAccounts(request.getParameter("accounts"));
 			newstudent.setPassword(request.getParameter("password"));
+			newstudent.setTjr(request.getParameter("tjr"));
 			String id = UUID.randomUUID().toString().replace("-", "");
 			newstudent.setId(id);
 			// 创建用户暂未写，登陆后添加
@@ -222,7 +244,7 @@ public class StudentController extends BaseController {
 			student.setAccounts(request.getParameter("mobile"));
 			student.setRealname(request.getParameter("realname"));
 			student.setNickname(request.getParameter("nickname"));
-			student.setMobile(request.getParameter("mobile"));
+			// student.setMobile(request.getParameter("mobile"));
 			student.setMobileother(request.getParameter("mobileother"));
 			student.setSchool(request.getParameter("school"));
 			student.setGrade(request.getParameter("grade"));
@@ -264,6 +286,56 @@ public class StudentController extends BaseController {
 	}
 
 	@ResponseBody
+	@RequestMapping("/androidedit")
+	public Map<String, Object> androidedit(HttpServletRequest request, Model model) throws ParseException {
+		String id = request.getParameter("id");
+		Student student = this.studentService.selectByPrimaryKey(id);
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (student != null) {
+			// student.setAccounts(request.getParameter("mobile"));
+			student.setRealname(request.getParameter("realname"));
+			student.setNickname(request.getParameter("nickname"));
+			// student.setMobile(request.getParameter("mobile"));
+			student.setMobileother(request.getParameter("mobileother"));
+			student.setSchool(request.getParameter("school"));
+			student.setGrade(request.getParameter("grade"));
+			student.setAddress(request.getParameter("address"));
+			// student = upload(request, student);
+			this.studentService.updateByPrimaryKey(student);
+			map.put("code", "1111");
+			map.put("success", true);
+			map.put("message", "修改成功！");
+			// 修改成功以后根据信息完整度看是否发送红包,而且只送一次
+			// 判断条件realname：grade：address：school：mobileother
+			String sqlwhere = "userid = '" + id + "'";
+			sqlwhere += " and redname = '完善信息'";
+			List<Red> list = this.redService.getListByStudentID(sqlwhere);
+			if (list.size() == 0) {
+				if (!"".equals(request.getParameter("grade")) && !"".equals(request.getParameter("realname"))
+						&& !"".equals(request.getParameter("address")) && !"".equals(request.getParameter("school"))
+						&& !"".equals(request.getParameter("mobileother"))) {
+					// 创建红包数据模型,并且插入数据
+					Red red = new Red();
+					red.setUserid(id);
+					red.setPrice((float) 5);
+					red.setRedname("完善信息");
+					red.setContion("所有课程有效");
+					red.setRedtype("通用红包");
+					red.setEdate("永久有效");
+					red.setRstatus(0);
+					red.setSdate(CommonUtil.dateFormat(new Date(), null));
+					redService.insert(red);
+				}
+			}
+		} else {
+			map.put("code", "0000");
+			map.put("success", false);
+			map.put("message", "编辑失败，记录不存在！");
+		}
+		return map;
+	}
+
+	@ResponseBody
 	@RequestMapping("/login")
 	public Map<String, Object> login(HttpServletRequest request, Model model) {
 		String account = request.getParameter("account");
@@ -289,8 +361,8 @@ public class StudentController extends BaseController {
 	public Map<String, Object> forgetThePassword(HttpServletRequest request, Model model) throws ParseException {
 		String accounts = request.getParameter("accounts");
 		String newpassword = request.getParameter("newpassword");
-		System.out.println("accounts="+accounts);
-		System.out.println("newpassword="+newpassword);
+		System.out.println("accounts=" + accounts);
+		System.out.println("newpassword=" + newpassword);
 		Student student = this.studentService.selectByCode(accounts);
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (student != null) {

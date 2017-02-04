@@ -30,6 +30,8 @@
                     <li>
                         <label>查询关键字</label>
                         <input id="txtword" type="text" class="scinput" /></li>
+                         <li><label>推荐人</label>
+                        <input id="txttjr" type="text" class="scinput" /></li>
                     <li id="btnquery" class="click"><span>
                         <img src="images/t05.png" alt="查询" /></span>查询</li>
                 </ul>
@@ -44,7 +46,7 @@
                            	订单编号
                         </th>
                         <th>
-                           	学员名称
+                           	学员手机号
                         </th>
                         <th>
                          	教师姓名
@@ -67,9 +69,9 @@
                          <th>
                            	订单时间
                         </th>
-                         <th>
+                         <!-- <th>
                            	订单状态
-                        </th>
+                        </th> -->
                     </tr>
                 </thead>
                 <tbody id="datas">
@@ -78,7 +80,7 @@
                         </td>
                         <td id="ordercode">
                         </td>
-                        <td id="studentname">
+                        <td id="studentmobile">
                         </td>
                         <td id="teacherid">
                         </td>
@@ -94,9 +96,7 @@
                         </td>
                         <td id="ordertime">
                         </td>
-                         <td id="pstate">
-                        </td>
-                         
+                       <!--  -->  
                     </tr>
                 </tbody>
             </table>

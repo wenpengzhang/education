@@ -28,9 +28,12 @@
             	<input id="id" name="id" type="hidden" />
                 <label>教师姓名<b>*</b></label><input name="realname" type="text" class="dfinput" /></li>
             <li>
-                <label>手机号码<b>*</b></label><input name="mobile" type="text" class="dfinput" /></li>
+                <label>账号<b>*</b></label><input name="mobile" type="text" class="dfinput" /></li>
             <li>
                 <label>身份证号<b>*</b></label><input name="idnumber" type="text" class="dfinput" /></li>
+            <li>
+             <li>
+                <label>初始密码<b>*</b></label><input name="password" type="text" class="dfinput" /></li>
             <li>
                 <label>性    别</label>
                  <select name="sex" class="scselect">

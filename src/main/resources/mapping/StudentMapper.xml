@@ -21,10 +21,11 @@
     <result column="pstate" property="pstate" jdbcType="VARCHAR" />
     <result column="registertime" property="registertime" jdbcType="TIMESTAMP" />
     <result column="recstate" property="recstate" jdbcType="INTEGER" />
+    <result column="tjr" property="tjr" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, accounts, password, nickname, realname, pichead, sex, nation, birthday, address, 
-    grade, school, mobileother, mobile, email, stype, pstate, registertime, recstate
+    grade, school, mobileother, mobile, email, stype, pstate, registertime, recstate,tjr
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -43,14 +44,14 @@
       address, grade, school, 
       mobileother, mobile, email, 
       stype, pstate, registertime, 
-      recstate)
+      recstate,tjr)
     values (#{id,jdbcType=VARCHAR}, #{accounts,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{nickname,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, #{pichead,jdbcType=VARCHAR}, 
       #{sex,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
       #{address,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
       #{mobileother,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{stype,jdbcType=VARCHAR}, #{pstate,jdbcType=VARCHAR}, #{registertime,jdbcType=TIMESTAMP}, 
-      #{recstate,jdbcType=INTEGER})
+      #{recstate,jdbcType=INTEGER}, #{tjr,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.edu.core.domain.Student" >
     insert into student
@@ -112,6 +113,9 @@
       <if test="recstate != null" >
         recstate,
       </if>
+      <if test="tjr != null" >
+        tjr,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -170,6 +174,9 @@
       </if>
       <if test="recstate != null" >
         #{recstate,jdbcType=INTEGER},
+      </if>
+      <if test="tjr != null" >
+        #{tjr,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

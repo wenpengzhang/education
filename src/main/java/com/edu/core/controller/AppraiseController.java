@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.edu.core.domain.Appraise;
+import com.edu.core.domain.Course;
 import com.edu.core.domain.Ordering;
 import com.edu.core.domain.Student;
 import com.edu.core.domain.SubCourse;
@@ -65,8 +66,8 @@ public class AppraiseController extends BaseController {
 		String teacherid = request.getParameter("teacherid");
 		int iPageIndex = Integer.parseInt(request.getParameter("pageindex"));
 		String sqlwhere = "teacherid = '" + teacherid + "'";
-		System.out.println("============teacherid"+teacherid);
-		System.out.println("============iPageIndex"+iPageIndex);
+		System.out.println("============teacherid" + teacherid);
+		System.out.println("============iPageIndex" + iPageIndex);
 		List<Appraise> list = this.appraiseService.selectBylimit(sqlwhere, (iPageIndex - 1) * iLimit,
 				iPageIndex * iLimit);
 		for (Appraise item : list) {
@@ -103,14 +104,27 @@ public class AppraiseController extends BaseController {
 			SubCourse subcourse = subCourseService.selectByPrimaryKey(item.getSubcourseid());
 			item.setStudentid(student.getRealname());
 			item.setTeacherid(teacher.getRealname());
-			if(subcourse!=null){
+			if (subcourse != null) {
 				item.setSubcourseid(subcourse.getSubname());
-			}else{
+			} else {
 				item.setSubcourseid("");
 			}
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
+		// 计算总页数
+		List<Appraise> list1 = this.appraiseService.selectBySql(sqlwhere);
+		// 计算总页数
+		int totalpage = 0;
+		if (list1.size() > 0) {
+			if (list1.size() % 20 > 0) {
+				totalpage = (list1.size() / 20) + 1;
+			} else {
+				totalpage = list1.size() / 20;
+			}
+
+		}
 		map.put("total", list.size());
+		map.put("totalpage", totalpage);
 		map.put("records", list);
 		return map;
 	}
@@ -145,9 +159,52 @@ public class AppraiseController extends BaseController {
 			appraise.setOrderid(ordering.getId());
 			appraise.setGrade(request.getParameter("grade"));
 			appraise.setAdvise(request.getParameter("advise"));
+			appraise.setAvgscore(Integer.parseInt(request.getParameter("avgscore")));
 			appraise.setFactscore(Integer.parseInt(request.getParameter("factscore")));
 			appraise.setQualityscore(Integer.parseInt(request.getParameter("qualityscore")));
 			appraise.setAttitudescore(Integer.parseInt(request.getParameter("attitudescore")));
+			appraise.setTotalscore(Integer.parseInt(request.getParameter("totalscore")));
+			appraise.setFiretime(new Date());
+			String id = UUID.randomUUID().toString().replace("-", "");
+			appraise.setId(id);
+
+			// 创建用户暂未写，登陆后添加
+			this.appraiseService.insert(appraise);
+			map.put("code", "1111");
+			map.put("success", true);
+			map.put("message", "添加成功！");
+		} else {
+			map.put("code", "0000");
+			map.put("success", false);
+			map.put("message", "评论失败，因为无订单或者已评论。");
+		}
+		return map;
+	}
+
+	@ResponseBody
+	@RequestMapping("/androidadd")
+	public Map<String, Object> androidadd(HttpServletRequest request, Model model) throws ParseException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		String studentid = request.getParameter("studentid");
+		String subcourseid = request.getParameter("subcourseid");
+		SubCourse subcourse = subCourseService.selectByPrimaryKey(subcourseid);
+		Ordering ordering = orderingService.selectByOther(studentid, subcourse.getCourseid());
+		String strWhere = "studentid='" + studentid + "' and subcourseid='" + subcourseid + "'";
+		List<Appraise> list = appraiseService.selectBySql(strWhere);
+		if (ordering != null && list.isEmpty()) {
+			Appraise appraise = new Appraise();
+			appraise.setStudentid(request.getParameter("studentid"));
+			appraise.setTeacherid(subcourse.getTeacherid());
+			appraise.setSubcourseid(request.getParameter("subcourseid"));
+			appraise.setCourseid(ordering.getCourseid());
+			appraise.setOrderid(ordering.getId());
+			appraise.setGrade(request.getParameter("grade"));
+			appraise.setAdvise(request.getParameter("advise"));
+			//appraise.setAvgscore(Integer.parseInt(request.getParameter("avgscore")));
+			appraise.setFactscore(Integer.parseInt(request.getParameter("factscore")));
+			appraise.setQualityscore(Integer.parseInt(request.getParameter("qualityscore")));
+			appraise.setAttitudescore(Integer.parseInt(request.getParameter("attitudescore")));
+			appraise.setTotalscore(Integer.parseInt(request.getParameter("totalscore")));
 			appraise.setFiretime(new Date());
 			String id = UUID.randomUUID().toString().replace("-", "");
 			appraise.setId(id);

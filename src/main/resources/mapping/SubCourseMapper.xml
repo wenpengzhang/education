@@ -37,12 +37,12 @@
       datestart, dateend, stratdate, 
       enddate, subname, lecturer, 
       subtype, subprice, substate, 
-      liveurl, chatname)
+      liveurl, chatname,recordurl)
     values (#{id,jdbcType=VARCHAR}, #{courseid,jdbcType=VARCHAR}, #{teacherid,jdbcType=VARCHAR}, 
       #{datestart,jdbcType=TIMESTAMP}, #{dateend,jdbcType=TIMESTAMP}, #{stratdate,jdbcType=VARCHAR}, 
       #{enddate,jdbcType=VARCHAR}, #{subname,jdbcType=VARCHAR}, #{lecturer,jdbcType=VARCHAR}, 
       #{subtype,jdbcType=VARCHAR}, #{subprice,jdbcType=DECIMAL}, #{substate,jdbcType=VARCHAR}, 
-      #{liveurl,jdbcType=VARCHAR}, #{chatname,jdbcType=VARCHAR})
+      #{liveurl,jdbcType=VARCHAR}, #{chatname,jdbcType=VARCHAR},#{recordurl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.edu.core.domain.SubCourse" >
     insert into subcourse
@@ -89,6 +89,9 @@
       <if test="chatname != null" >
         chatname,
       </if>
+       <if test="recordurl != null" >
+        recordurl,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -132,6 +135,9 @@
       </if>
       <if test="chatname != null" >
         #{chatname,jdbcType=VARCHAR},
+      </if>
+      <if test="recordurl != null" >
+        #{recordurl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -177,6 +183,9 @@
       <if test="chatname != null" >
         chatname = #{chatname,jdbcType=VARCHAR},
       </if>
+       <if test="chatname != null" >
+        recordurl = #{recordurl,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -194,7 +203,8 @@
       subprice = #{subprice,jdbcType=DECIMAL},
       substate = #{substate,jdbcType=VARCHAR},
       liveurl = #{liveurl,jdbcType=VARCHAR},
-      chatname = #{chatname,jdbcType=VARCHAR}
+      chatname = #{chatname,jdbcType=VARCHAR},
+      recordurl = #{recordurl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
    <delete id="deleteByCourseKey" parameterType="java.lang.String" >

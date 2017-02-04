@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.edu.core.domain.StatOrder;
+import com.edu.core.domain.Student;
 import com.edu.core.domain.SubCourse;
 import com.edu.core.domain.TeachExperience;
 import com.edu.core.domain.Teacher;
@@ -159,7 +160,20 @@ public class TeacherController extends BaseController {
 			item.setStatOrder(statorder);
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
+		// 计算总页数
+		List<Teacher> list1 = this.teacherService.selectBySql(sqlwhere);
+		// 计算总页数
+		int totalpage = 0;
+		if (list1.size() > 0) {
+			if (list1.size() % 20 > 0) {
+				totalpage = (list1.size() / 20) + 1;
+			} else {
+				totalpage = list1.size() / 20;
+			}
+
+		}
 		map.put("total", list.size());
+		map.put("totalpage", totalpage);
 		map.put("records", list);
 		return map;
 	}

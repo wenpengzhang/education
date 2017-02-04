@@ -16,6 +16,8 @@ public class ViewOrder {
     private String studentname;
 
     private String studentmobile;
+    
+    private String tjr;
 
     private String coursename;
 
@@ -261,6 +263,14 @@ public class ViewOrder {
 
 	public void setPaystate(String paystate) {
 		this.paystate = paystate;
+	}
+
+	public String getTjr() {
+		return tjr;
+	}
+
+	public void setTjr(String tjr) {
+		this.tjr = tjr;
 	}
     
 }

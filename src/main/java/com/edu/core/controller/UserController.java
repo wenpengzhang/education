@@ -215,10 +215,10 @@ public class UserController extends BaseController {
 		if ("0".equals(type)) {
 			Map<String, Object> map1 = new HashMap<String, Object>();
 			map1.put("image", "http://123.56.153.57:8080/education/images/students/student1.PNG");
-			map1.put("url", "www.baidu.com");
+			map1.put("url", "123.56.153.57:8080/education/index11.html");
 			Map<String, Object> map2 = new HashMap<String, Object>();
 			map2.put("image", "http://123.56.153.57:8080/education/images/students/student2.PNG");
-			map2.put("url", "www.baidu.com");
+			map2.put("url", "123.56.153.57:8080/education/classdetail.html");
 			list.add(map1);
 			list.add(map2);
 			map.put("records", list);

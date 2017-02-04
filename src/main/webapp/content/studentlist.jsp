@@ -36,6 +36,8 @@
                     <li>
                         <label>查询关键字</label>
                         <input id="txtword" type="text" class="scinput" /></li>
+                        <li><label>推荐人</label>
+                        <input id="txttjr" type="text" class="scinput" /></li>
                     <li id="btnquery" class="click"><span>
                         <img src="images/t05.png" alt="查询" /></span>查询</li>
                 </ul>
@@ -47,7 +49,7 @@
                             <input id='checkall' type="checkbox" />
                         </th>
                         <th>
-                           	学院帐号
+                           	学员帐号
                         </th>
                         <th>
                            	学员姓名
@@ -74,7 +76,7 @@
                          	订单数
                         </th>
                          <th>
-                           	完成课时数
+                           	推荐人
                         </th>
                          <th>
                            	消费金额
@@ -103,7 +105,7 @@
                         </td>
                         <td id="ordercount">
                         </td>
-                        <td id="progress">
+                        <td id="tjr">
                         </td>
                         <td id="summoney">
                         </td>

@@ -42,6 +42,8 @@ public class Student {
     private Integer recstate;
     
     private StatOrder statorder;
+    
+    private String tjr;
 
     public String getId() {
         return id;
@@ -202,4 +204,20 @@ public class Student {
     public void setStatOrder(StatOrder statorder) {
         this.statorder = statorder;
     }
+
+	public StatOrder getStatorder() {
+		return statorder;
+	}
+
+	public void setStatorder(StatOrder statorder) {
+		this.statorder = statorder;
+	}
+
+	public String getTjr() {
+		return tjr;
+	}
+
+	public void setTjr(String tjr) {
+		this.tjr = tjr;
+	}
 }

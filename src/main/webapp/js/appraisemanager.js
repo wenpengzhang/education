@@ -178,7 +178,8 @@ function appraisemanager() {
                         row.attr("id", "ready"); //改变绑定好数据的行的id
                         row.appendTo("#datas"); //添加到模板的容器中
                     });
-                    $("#lblrcdcount").text(response.recordcount);
+                    $("#lblrcdcount").text(response.total);
+                    pageCount = response.totalpage;
                 }
             } //返回成功完成
         });

@@ -9,6 +9,7 @@
     <result column="ordercode" property="ordercode" jdbcType="VARCHAR" />
     <result column="studentname" property="studentname" jdbcType="VARCHAR" />
     <result column="studentmobile" property="studentmobile" jdbcType="VARCHAR" />
+    <result column="tjr" property="tjr" jdbcType="VARCHAR" />
     <result column="coursename" property="coursename" jdbcType="VARCHAR" />
     <result column="vstage" property="vstage" jdbcType="VARCHAR" />
     <result column="vsubject" property="vsubject" jdbcType="VARCHAR" />
@@ -37,7 +38,7 @@
     <result column="sumprogress" property="sumprogress" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, studentid, courseid, teacherid, ordercode, studentname, studentmobile, coursename, vstage, vsubject, vgrade, cmode, 
+    id, studentid, courseid, teacherid, ordercode, studentname, studentmobile,tjr,coursename, vstage, vsubject, vgrade, cmode, 
       firsttype, sectype, thirdttype, price, ccount, cnumber, summoney, paymode, ordertime, progress, sumprogress, stype, pstate,paystate
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >

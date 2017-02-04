@@ -182,9 +182,10 @@ function studentmanager() {
                         row.find("#school").text(n.school);
                         row.find("#grade").text(n.grade);
                         row.find("#address").text(n.address);
+                        row.find("#tjr").text(n.tjr);
                         if(n.statOrder!=null){
                         	row.find("#ordercount").text(n.statOrder.ordercount);
-                        	row.find("#progress").text(n.statOrder.progress+"/"+n.statOrder.sumprogress);
+                        	//row.find("#progress").text(n.statOrder.progress+"/"+n.statOrder.sumprogress);
                         	row.find("#summoney").text(n.statOrder.summoney);
                         }else{
                         	row.find("#ordercount").text("0");
@@ -193,7 +194,8 @@ function studentmanager() {
                         row.attr("id", "ready"); //改变绑定好数据的行的id
                         row.appendTo("#datas"); //添加到模板的容器中
                     });
-                    $("#lblrcdcount").text(response.recordcount);
+                    $("#lblrcdcount").text(response.total);
+                    pageCount = response.totalpage;
                 }
             } //返回成功完成
         });
@@ -202,7 +204,8 @@ function studentmanager() {
     //获取参数
     function getAjaxParams() {
         var skeyword = $("#txtword").val();
-        var data = { "Method": "list", "keyword": skeyword,"pageindex": pageIndex};
+        var skeytjr = $("#txttjr").val();
+        var data = { "Method": "list", "keyword": skeyword,"skeytjr":skeytjr,"pageindex": pageIndex};
         return data;
     };
 
